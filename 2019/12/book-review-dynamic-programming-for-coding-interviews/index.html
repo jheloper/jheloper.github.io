@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="나는 다이내믹 프로그래밍이 정확히 무엇을 의미하는지 전혀 알지 못하는 상태였기 때문에 약간의 부담감을 안고 책을 읽기 시작했는데, 그런 나에게 이 책은 다이내믹 프로그래밍이 무엇인지에 대해서 맛볼 수 있는 중요한 기회를 선사해주었다. 일단 책의 처음은 재귀에 대한 내용으로 시작한다. 재귀의 경우 꽤나 자주 접했기에 비교적 쉽게 이해할 수 있었다. 책의 내">
+<meta name="keywords" content="다이내믹 프로그래밍,리뷰">
+<meta property="og:type" content="article">
+<meta property="og:title" content="다이내믹 프로그래밍 완전 정복 리뷰">
+<meta property="og:url" content="https://jheloper.github.io/2019/12/book-review-dynamic-programming-for-coding-interviews/index.html">
+<meta property="og:site_name" content="Jheloper&#39;s Dev Log">
+<meta property="og:description" content="나는 다이내믹 프로그래밍이 정확히 무엇을 의미하는지 전혀 알지 못하는 상태였기 때문에 약간의 부담감을 안고 책을 읽기 시작했는데, 그런 나에게 이 책은 다이내믹 프로그래밍이 무엇인지에 대해서 맛볼 수 있는 중요한 기회를 선사해주었다. 일단 책의 처음은 재귀에 대한 내용으로 시작한다. 재귀의 경우 꽤나 자주 접했기에 비교적 쉽게 이해할 수 있었다. 책의 내">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://jheloper.github.io/images/book-cover-2019-12-15.jpg">
+<meta property="og:updated_time" content="2020-06-21T20:09:35.863Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="다이내믹 프로그래밍 완전 정복 리뷰">
+<meta name="twitter:description" content="나는 다이내믹 프로그래밍이 정확히 무엇을 의미하는지 전혀 알지 못하는 상태였기 때문에 약간의 부담감을 안고 책을 읽기 시작했는데, 그런 나에게 이 책은 다이내믹 프로그래밍이 무엇인지에 대해서 맛볼 수 있는 중요한 기회를 선사해주었다. 일단 책의 처음은 재귀에 대한 내용으로 시작한다. 재귀의 경우 꽤나 자주 접했기에 비교적 쉽게 이해할 수 있었다. 책의 내">
+<meta name="twitter:image" content="https://jheloper.github.io/images/book-cover-2019-12-15.jpg">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/p_favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/p_favicon.ico" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/p_favicon.ico">
+          
+        
+    
+    <!-- title -->
+    <title>다이내믹 프로그래밍 완전 정복 리뷰</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/tags/">Tag</a></li>
+         
+          <li><a href="/categories/">Category</a></li>
+        
+      </ul>
+    </span>
+    <br>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2020/01/jpa-05-relation-usage/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/09/jpa-04-relation-basic/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://jheloper.github.io/2019/12/book-review-dynamic-programming-for-coding-interviews/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://jheloper.github.io/2019/12/book-review-dynamic-programming-for-coding-interviews/&text=다이내믹 프로그래밍 완전 정복 리뷰"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://jheloper.github.io/2019/12/book-review-dynamic-programming-for-coding-interviews/&title=다이내믹 프로그래밍 완전 정복 리뷰"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://jheloper.github.io/2019/12/book-review-dynamic-programming-for-coding-interviews/&is_video=false&description=다이내믹 프로그래밍 완전 정복 리뷰"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=다이내믹 프로그래밍 완전 정복 리뷰&body=Check out this article: https://jheloper.github.io/2019/12/book-review-dynamic-programming-for-coding-interviews/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://jheloper.github.io/2019/12/book-review-dynamic-programming-for-coding-interviews/&title=다이내믹 프로그래밍 완전 정복 리뷰"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://jheloper.github.io/2019/12/book-review-dynamic-programming-for-coding-interviews/&title=다이내믹 프로그래밍 완전 정복 리뷰"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://jheloper.github.io/2019/12/book-review-dynamic-programming-for-coding-interviews/&title=다이내믹 프로그래밍 완전 정복 리뷰"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://jheloper.github.io/2019/12/book-review-dynamic-programming-for-coding-interviews/&title=다이내믹 프로그래밍 완전 정복 리뷰"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://jheloper.github.io/2019/12/book-review-dynamic-programming-for-coding-interviews/&name=다이내믹 프로그래밍 완전 정복 리뷰&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://jheloper.github.io/2019/12/book-review-dynamic-programming-for-coding-interviews/&t=다이내믹 프로그래밍 완전 정복 리뷰"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        다이내믹 프로그래밍 완전 정복 리뷰
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Jheloper's Dev Log</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-12-15T12:00:00.000Z" itemprop="datePublished">2019-12-15</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/다이내믹-프로그래밍/">다이내믹 프로그래밍</a>, <a class="tag-link" href="/tags/리뷰/">리뷰</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p><img src="/images/book-cover-2019-12-15.jpg" alt></p>
+<p>나는 다이내믹 프로그래밍이 정확히 무엇을 의미하는지 전혀 알지 못하는 상태였기 때문에 약간의 부담감을 안고 책을 읽기 시작했는데, 그런 나에게 이 책은 다이내믹 프로그래밍이 무엇인지에 대해서 맛볼 수 있는 중요한 기회를 선사해주었다.</p>
+<p>일단 책의 처음은 <strong>재귀</strong>에 대한 내용으로 시작한다. 재귀의 경우 꽤나 자주 접했기에 비교적 쉽게 이해할 수 있었다. 책의 내용 중에서 <strong><em>재귀를 사용할 때 주의해야할 것</em></strong>에 대해서 아래와 같이 나와있었다.</p>
+<ol>
+<li>재귀에는 항상 종료 조건이 있어야 한다. 종료 조건이 없으면 재귀 호출이 무한히 반복된다.</li>
+<li>재귀 함수는 전체 작업의 일부만 수행하고 나머지는 재귀 호출에 위임한다.</li>
+</ol>
+<p>어찌보면 너무나 당연한 이야기였지만, 너무나 당연하기 때문에 간과할 수 있는 부분에 대해서 명확하게 짚어주고 있었다.</p>
+<p>또한 재귀에 대해 설명하면서 아래와 같은 말도 덧붙이고 있었다.</p>
+<blockquote>
+<p>쉬운 코드와 복잡한 코드 중에 선택해야 한다면, 성능이나 메모리의 이점이 있지 않은 한 쉬운 코드가 좋습니다.</p>
+</blockquote>
+<blockquote>
+<p>같은 문제를 비슷한 노력으로 해결할 수 있다면 재귀 호출을 사용하지 않는 쪽으로 구현하는 것이 바람직합니다. 만들어진 프로그램을 실행하보면 재귀 호출을 사용하지 않는 경우가 실행도 빠르고 필요한 메모리의 양도 작습니다.</p>
+</blockquote>
+<p>깊이 공감한다. 정말 명확한 이유가 있지 않은 한 재귀 호출을 남발하는 것은 좋지 않다고 생각한다. 물론 재귀 호출로 문제를 푸는 것이 우아하고 세련된 방법처럼 보일 수 있지만, 재귀 호출은 이를 사용하지 않는 경우에 비해 일반적으로 더 많은 비용이 들기 때문이다.</p>
+<p>이어서 <strong>선행 재귀</strong>와 <strong>후행 재귀</strong>에 대해서도 설명해주고 있는데, 연결 리스트의 탐색 예제를 통해 설명해주는 부분이 나름 직관적으로 와닿았다. </p>
+<p>그리고 재귀 호출과 메모리에 대한 내용이 있었는데, 특히 <strong>프로세스 주소 공간</strong>에 대한 설명은 꽤나 유용했다. <strong>코드 영역, 데이터 영역, 스택 영역, 힙 영역</strong> 각각에 대해 간략하지만 핵심적인 설명이 있었으며 특히나 <strong><em>프로그램의 로딩부터 함수의 호출로 인한 메모리의 변화가 어떻게 일어나는지</em></strong>에 대해 설명하는 부분이 유용하다고 느껴졌다.</p>
+<p>재귀를 사용할 때와 사용하지 않을 때 메모리의 상태 비교를 통해 책에서는 아래와 같이 이야기한다.</p>
+<blockquote>
+<p>재귀 호출을 사용하면 메모리와 실행 시간 양 측면에서 비용이 증가합니다.</p>
+</blockquote>
+<p>이에 이어 다음으로는 재귀 접근 방식이 가지는 두 가지 특징에 대해서 언급하는데 그 첫번째는 <strong>최적의 하위 구조</strong>로, 아래와 같이 설명하고 있다.</p>
+<blockquote>
+<p>어떤 문제의 풀이법을 같은 문제의 더 작은 문제로 정의하는 게 최적의 풀이법이라면 이 문제는 최적의 하위 구조를 가졌다고 합니다. 최적의 하위 구조를 가진 문제는 다이내믹 프로그래밍 방법을 적용하기 좋은 문제입니다.</p>
+</blockquote>
+<p>그리고 두번째 특징으로는 <strong>하위 문제의 반복 계산</strong>에 대해서 언급하는데, 책의 본문에서는 피보나치 수열 계산 문제에서의 하위 문제의 반복 계산을 예로 들고 있다. 그리고 이어서 <strong><em>하위 문제의 반복 계산이 발생하여 수행 시간이 증가하는 문제를 해결하기 위한 방법</em></strong>으로 <strong>메모 전략(메모이제이션)</strong>을 소개하는데, 이를 쉽게 말하면 <strong><em>어떤 하위 문제를 계산했을 때 그 결과를 일종의 캐시에 저장하여 같은 하위 문제를 다시 풀 때 이미 저장된 결과를 사용</em></strong>하는 방식을 의미한다. 또한 메모 전략에 대해서 아래와 같이 언급하고 있다.</p>
+<blockquote>
+<p>메모 전략도 재귀 접근 방법에 속합니다.</p>
+</blockquote>
+<blockquote>
+<p>메모 전략 = 재귀 호출 + 캐시 - 하위 문제의 반복 계산.</p>
+</blockquote>
+<p>이어서 드디어 주인공인 <strong>다이내믹 프로그래밍</strong>에 대한 내용이 본격적으로 등장하는데, 가장 처음 알게된 것은 문제 해결의 방향이 <strong><em>재귀 호출, 또는 메모 전략은 하향식인 반면 다이내믹 프로그래밍은 상향식</em></strong>이라는 사실이었다.</p>
+<p>앞에서 재귀 호출 또는 메모 전략을 통해 풀었던 예제들을 보여주면서 이를 다이내믹 프로그래밍으로 해결할 수 있음을 보여주는데, 이와 함께 직접 깃헙에 재귀 호출, 메모 전략, 다이내믹 프로그래밍의 실행 시간을 비교해볼 수 있는 예제 코드를 올려놨다는 점이 좋았다.</p>
+<p>동일한 문제를 각각 하향식 접근 방법과 상향식 접근 방법로 풀어내는 예제 코드들로 하여금 그 둘이 어떤 차이점을 가지는지를 비교해볼 수 있었다.</p>
+<p>그리고 결론적으로 <strong><em>다이내믹 프로그래밍은 재귀 호출 자체로부터 발생하는 부하를 피하기 위해 상향식으로 문제를 해결할 수 있다</em></strong>, 라는 내용을 전달하고 있었다.</p>
+<p>더 나아가 그렇다고 다이내믹 프로그래밍이 은탄환은 아니라는 것에 대해서 설명해주는데, 하향식 접근 방법에서는 모든 하위 문제를 풀지 않고 전체 문제의 해답을 얻을 때 필요한 하위 문제만 풀었으나 상향식인 <strong><em>다이내믹 프로그래밍에서는 모든 하위 문제에 대해 계산을 수행하여 드물게 실제 필요한 것보다 훨씬 더 많은 하위 문제를 풀어야 하는 부작용이 발생</em></strong>하기도 한다는 점에 대해서 설명해주고 있다.</p>
+<p>이에 이어 다이내믹 프로그래밍이 어떤 것이다, 라는 설명에서 그치지 않고 실제로 어떻게 적용할 수 있는지를 알려주는데, <strong>다이내믹 프로그래밍을 사용해서 문제를 푸는 기본적인 순서</strong>는 아래와 같이 알려주고 있다.</p>
+<ol>
+<li>재귀 호출을 사용한 풀이법 작성.</li>
+<li>다이내믹 프로그래밍이나 메모 전략을 사용해 풀이법 개선.</li>
+</ol>
+<p>그리고 어떤 문제가 <strong>다이내믹 프로그래밍 적용 가능 여부를 확인할 수 있는 체크리스트</strong>도 아래와 같이 알려주고 있다.</p>
+<ol>
+<li>문제가 최적의 하위 구조를 가지고 있는지.</li>
+<li>하위 문제를 반복 계산하는지.</li>
+<li>최적화, 최대화 또는 최소화나 어떤 작업의 경우의 수를 구하는 유형의 문제인지.</li>
+</ol>
+<p>더불어 <strong>다이내믹 프로그래밍을 적용하기 위한 단계식 접근법</strong>도 친절하게 알려주고 있다.</p>
+<ol>
+<li>다이내믹 프로그래밍 적용 가능한 경우인지 확인.</li>
+<li>점화식 또는 재귀 과정 정의.<ol>
+<li>문제를 하위 문제를 사용해 하향식으로 정의.</li>
+<li>맨 아래에 해당하는 기본 경우에 대한 답을 정의.</li>
+<li>종료 조건 추가.</li>
+</ol>
+</li>
+<li>(선택적) 메모 전략 시도.</li>
+<li>상향식으로 문제 풀이 도전.</li>
+</ol>
+<p>위와 같이 실제로 적용할 수 있는 방법에 대해서도 설명해주고 있는 점이 상당히 유용하다고 느껴졌는데, 다이내믹 프로그래밍이 무엇인지 알았다고 해서 어디에 어떻게 사용해야 하는지 단번에 알 수 있는 건 아니라고 느꼈기 때문이다. 그리고 이러한 단계식 접근법을 여러 예제 문제들에 적용하는 과정을 보여주고 있다는 점에서 상당히 마음에 들었다.</p>
+<p>이 책의 전체적인 소감은 이론적인 부분의 설명은 적당하게, 최대한 부담되지 않는 선에서 하면서 실제로 적용해볼 수 있는 여러 문제를 소개해주고 풀어내는 과정을 통해 재귀 호출과 메모 전략, 다이내믹 프로그래밍에 대해서 알려주는 실용적인 책, 이라는 것이었다. 본문 자체에도 꽤나 많은 예제들이 수록되어 있으며, 마지막 장인 5장은 아예 통째로 다양한 실전 문제들을 수록하여 위에서 안내해주는 단계식 접근법을 통해 풀어내는 과정을 보여주면서 연습문제를 통해 독자들 스스로도 한껏 두뇌를 사용할 수 있는 기회를 제공해주고 있다.</p>
+<p>재귀 호출과 메모 전략, 다이내믹 프로그래밍에 대해서 관심이 있으나 아직 입문하지 못한 분들에게 추천하기 좋은 책이라는 생각이 든다.</p>
+<blockquote>
+<p>위 글은 출판사 한빛미디어의 “나는 리뷰어다” 11월 미션 서적으로 제공받은 “다이내믹 프로그래밍 완전 정복(미나크시, 카말 라와트 지음, 박상은 옮김)”의 리뷰입니다.</p>
+</blockquote>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/tags/">Tag</a></li>
+         
+          <li><a href="/categories/">Category</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://jheloper.github.io/2019/12/book-review-dynamic-programming-for-coding-interviews/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://jheloper.github.io/2019/12/book-review-dynamic-programming-for-coding-interviews/&text=다이내믹 프로그래밍 완전 정복 리뷰"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://jheloper.github.io/2019/12/book-review-dynamic-programming-for-coding-interviews/&title=다이내믹 프로그래밍 완전 정복 리뷰"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://jheloper.github.io/2019/12/book-review-dynamic-programming-for-coding-interviews/&is_video=false&description=다이내믹 프로그래밍 완전 정복 리뷰"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=다이내믹 프로그래밍 완전 정복 리뷰&body=Check out this article: https://jheloper.github.io/2019/12/book-review-dynamic-programming-for-coding-interviews/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://jheloper.github.io/2019/12/book-review-dynamic-programming-for-coding-interviews/&title=다이내믹 프로그래밍 완전 정복 리뷰"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://jheloper.github.io/2019/12/book-review-dynamic-programming-for-coding-interviews/&title=다이내믹 프로그래밍 완전 정복 리뷰"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://jheloper.github.io/2019/12/book-review-dynamic-programming-for-coding-interviews/&title=다이내믹 프로그래밍 완전 정복 리뷰"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://jheloper.github.io/2019/12/book-review-dynamic-programming-for-coding-interviews/&title=다이내믹 프로그래밍 완전 정복 리뷰"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://jheloper.github.io/2019/12/book-review-dynamic-programming-for-coding-interviews/&name=다이내믹 프로그래밍 완전 정복 리뷰&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://jheloper.github.io/2019/12/book-review-dynamic-programming-for-coding-interviews/&t=다이내믹 프로그래밍 완전 정복 리뷰"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020
+    Jheloper
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/tags/">Tag</a></li>
+         
+          <li><a href="/categories/">Category</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-107872316-2', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'jheloper';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+
+</body>
+</html>

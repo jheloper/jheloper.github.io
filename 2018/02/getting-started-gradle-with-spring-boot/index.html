@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="최근 스프링 부트(Spring Boot)로 사이드 프로젝트를 진행하고자 짧게 예제를 만들어 보았다. 추후 참고용으로 사용하고자 포스팅하기로 했다. 참고로 아래 포스팅 내용은 여기의 내용을 참조하였다. JDK 및 Gradle 설치 확인12java -versiongradle --version  아래 내용은 Oracle JDK 1.8, 그래들(Gradle) 4.">
+<meta name="keywords" content="Spring,Gradle">
+<meta property="og:type" content="article">
+<meta property="og:title" content="그래들(Gradle)로 스프링 부트(Spring Boot) 시작하기">
+<meta property="og:url" content="https://jheloper.github.io/2018/02/getting-started-gradle-with-spring-boot/index.html">
+<meta property="og:site_name" content="Jheloper&#39;s Dev Log">
+<meta property="og:description" content="최근 스프링 부트(Spring Boot)로 사이드 프로젝트를 진행하고자 짧게 예제를 만들어 보았다. 추후 참고용으로 사용하고자 포스팅하기로 했다. 참고로 아래 포스팅 내용은 여기의 내용을 참조하였다. JDK 및 Gradle 설치 확인12java -versiongradle --version  아래 내용은 Oracle JDK 1.8, 그래들(Gradle) 4.">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2020-06-21T20:09:35.859Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="그래들(Gradle)로 스프링 부트(Spring Boot) 시작하기">
+<meta name="twitter:description" content="최근 스프링 부트(Spring Boot)로 사이드 프로젝트를 진행하고자 짧게 예제를 만들어 보았다. 추후 참고용으로 사용하고자 포스팅하기로 했다. 참고로 아래 포스팅 내용은 여기의 내용을 참조하였다. JDK 및 Gradle 설치 확인12java -versiongradle --version  아래 내용은 Oracle JDK 1.8, 그래들(Gradle) 4.">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/p_favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/p_favicon.ico" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/p_favicon.ico">
+          
+        
+    
+    <!-- title -->
+    <title>그래들(Gradle)로 스프링 부트(Spring Boot) 시작하기</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/tags/">Tag</a></li>
+         
+          <li><a href="/categories/">Category</a></li>
+        
+      </ul>
+    </span>
+    <br>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/01/retrospective-2018/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2017/10/php-datetime/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://jheloper.github.io/2018/02/getting-started-gradle-with-spring-boot/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://jheloper.github.io/2018/02/getting-started-gradle-with-spring-boot/&text=그래들(Gradle)로 스프링 부트(Spring Boot) 시작하기"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://jheloper.github.io/2018/02/getting-started-gradle-with-spring-boot/&title=그래들(Gradle)로 스프링 부트(Spring Boot) 시작하기"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://jheloper.github.io/2018/02/getting-started-gradle-with-spring-boot/&is_video=false&description=그래들(Gradle)로 스프링 부트(Spring Boot) 시작하기"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=그래들(Gradle)로 스프링 부트(Spring Boot) 시작하기&body=Check out this article: https://jheloper.github.io/2018/02/getting-started-gradle-with-spring-boot/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://jheloper.github.io/2018/02/getting-started-gradle-with-spring-boot/&title=그래들(Gradle)로 스프링 부트(Spring Boot) 시작하기"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://jheloper.github.io/2018/02/getting-started-gradle-with-spring-boot/&title=그래들(Gradle)로 스프링 부트(Spring Boot) 시작하기"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://jheloper.github.io/2018/02/getting-started-gradle-with-spring-boot/&title=그래들(Gradle)로 스프링 부트(Spring Boot) 시작하기"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://jheloper.github.io/2018/02/getting-started-gradle-with-spring-boot/&title=그래들(Gradle)로 스프링 부트(Spring Boot) 시작하기"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://jheloper.github.io/2018/02/getting-started-gradle-with-spring-boot/&name=그래들(Gradle)로 스프링 부트(Spring Boot) 시작하기&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://jheloper.github.io/2018/02/getting-started-gradle-with-spring-boot/&t=그래들(Gradle)로 스프링 부트(Spring Boot) 시작하기"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#JDK-및-Gradle-설치-확인"><span class="toc-number">1.</span> <span class="toc-text">JDK 및 Gradle 설치 확인</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Gradle-init"><span class="toc-number">2.</span> <span class="toc-text">Gradle init</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#build-gradle-내용-수정"><span class="toc-number">3.</span> <span class="toc-text">build.gradle 내용 수정</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Java-소스-추가"><span class="toc-number">4.</span> <span class="toc-text">Java 소스 추가</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#소스-디렉터리-추가"><span class="toc-number">4.1.</span> <span class="toc-text">소스 디렉터리 추가</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HelloController-java-생성"><span class="toc-number">4.2.</span> <span class="toc-text">HelloController.java 생성</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Application-java-생성"><span class="toc-number">4.3.</span> <span class="toc-text">Application.java 생성</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#빌드-또는-실행"><span class="toc-number">5.</span> <span class="toc-text">빌드 또는 실행</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#빌드"><span class="toc-number">5.1.</span> <span class="toc-text">빌드</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#실행"><span class="toc-number">5.2.</span> <span class="toc-text">실행</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#실행-확인"><span class="toc-number">6.</span> <span class="toc-text">실행 확인</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        그래들(Gradle)로 스프링 부트(Spring Boot) 시작하기
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Jheloper's Dev Log</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2018-02-03T03:30:00.000Z" itemprop="datePublished">2018-02-03</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Gradle/">Gradle</a>, <a class="tag-link" href="/tags/Spring/">Spring</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>최근 스프링 부트(Spring Boot)로 사이드 프로젝트를 진행하고자 짧게 예제를 만들어 보았다.</p>
+<p>추후 참고용으로 사용하고자 포스팅하기로 했다.</p>
+<p>참고로 아래 포스팅 내용은 <a href="https://spring.io/guides/gs/spring-boot/" target="_blank" rel="noopener">여기</a>의 내용을 참조하였다.</p>
+<h2 id="JDK-및-Gradle-설치-확인"><a href="#JDK-및-Gradle-설치-확인" class="headerlink" title="JDK 및 Gradle 설치 확인"></a>JDK 및 Gradle 설치 확인</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">java -version</span><br><span class="line">gradle --version</span><br></pre></td></tr></table></figure>
+
+<p>아래 내용은 Oracle JDK 1.8, 그래들(Gradle) 4.5 버전 기준으로 작성했으며, 운영체제는 우분투 16.04를 사용하고 있다.</p>
+<h2 id="Gradle-init"><a href="#Gradle-init" class="headerlink" title="Gradle init"></a>Gradle init</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir spring-boot-example</span><br><span class="line">cd spring-boot-example</span><br><span class="line">gradle init</span><br></pre></td></tr></table></figure>
+
+<p>먼저 예제로 사용할 디렉터리를 생성하고, <code>gradle init</code> 명령을 실행하여 gradle에 관련된 기본 파일들을 생성했다.</p>
+<h2 id="build-gradle-내용-수정"><a href="#build-gradle-내용-수정" class="headerlink" title="build.gradle 내용 수정"></a>build.gradle 내용 수정</h2><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">buildscript &#123;</span><br><span class="line">    repositories &#123;</span><br><span class="line">        mavenCentral()</span><br><span class="line">    &#125;</span><br><span class="line">    dependencies &#123;</span><br><span class="line">        classpath(<span class="string">"org.springframework.boot:spring-boot-gradle-plugin:1.5.10.RELEASE"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">apply <span class="string">plugin:</span> <span class="string">'java'</span></span><br><span class="line">apply <span class="string">plugin:</span> <span class="string">'eclipse'</span></span><br><span class="line">apply <span class="string">plugin:</span> <span class="string">'idea'</span></span><br><span class="line">apply <span class="string">plugin:</span> <span class="string">'org.springframework.boot'</span></span><br><span class="line"></span><br><span class="line">jar &#123;</span><br><span class="line">    baseName = <span class="string">'gs-spring-boot'</span></span><br><span class="line">    version =  <span class="string">'0.1.0'</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">repositories &#123;</span><br><span class="line">    mavenCentral()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">sourceCompatibility = <span class="number">1.8</span></span><br><span class="line">targetCompatibility = <span class="number">1.8</span></span><br><span class="line"></span><br><span class="line">dependencies &#123;</span><br><span class="line">    compile(<span class="string">"org.springframework.boot:spring-boot-starter-web"</span>)</span><br><span class="line">    testCompile(<span class="string">"junit:junit"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>그래들 빌드 설정으로 사용하는 <code>build.gradle</code>에 위 내용을 추가했다. 타입을 지정하지 않고 <code>gradle init</code>을 실행하여 생성한 <code>build.gradle</code> 파일에는 주석을 제외한 내용이 없는 깨끗한 상태이므로 위 내용을 그대로 추가하기만 하면 된다.</p>
+<h2 id="Java-소스-추가"><a href="#Java-소스-추가" class="headerlink" title="Java 소스 추가"></a>Java 소스 추가</h2><h3 id="소스-디렉터리-추가"><a href="#소스-디렉터리-추가" class="headerlink" title="소스 디렉터리 추가"></a>소스 디렉터리 추가</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p src/main/java/hello</span><br></pre></td></tr></table></figure>
+
+<h3 id="HelloController-java-생성"><a href="#HelloController-java-생성" class="headerlink" title="HelloController.java 생성"></a>HelloController.java 생성</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> hello;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"/"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">index</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Greetings from Spring Boot!"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Application-java-생성"><a href="#Application-java-생성" class="headerlink" title="Application.java 생성"></a>Application.java 생성</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> hello;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.CommandLineRunner;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.ApplicationContext;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"></span><br><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SpringApplication.run(Application.class, args);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> CommandLineRunner <span class="title">commandLineRunner</span><span class="params">(ApplicationContext ctx)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> args -&gt; &#123;</span><br><span class="line"></span><br><span class="line">            System.out.println(<span class="string">"Let's inspect the beans provided by Spring Boot:"</span>);</span><br><span class="line"></span><br><span class="line">            String[] beanNames = ctx.getBeanDefinitionNames();</span><br><span class="line">            Arrays.sort(beanNames);</span><br><span class="line">            <span class="keyword">for</span> (String beanName : beanNames) &#123;</span><br><span class="line">                System.out.println(beanName);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>예제로 사용할 소스 디렉터리 및 파일을 생성했다.</p>
+<h2 id="빌드-또는-실행"><a href="#빌드-또는-실행" class="headerlink" title="빌드 또는 실행"></a>빌드 또는 실행</h2><h3 id="빌드"><a href="#빌드" class="headerlink" title="빌드"></a>빌드</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gradle build</span><br></pre></td></tr></table></figure>
+
+<p>위의 그래들 빌드 명령을 실행하면 <code>build/libs/</code> 디렉터리 밑에 jar 파일이 생성된다.</p>
+<h3 id="실행"><a href="#실행" class="headerlink" title="실행"></a>실행</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gradle bootRun</span><br></pre></td></tr></table></figure>
+
+<p>또는 바로 위의 명령을 실행하면 <code>http://localhost:8080</code>로 접근할 수 있다. 바로 확인하고자 할 때에는 위 <code>bootRun</code> 명령을 사용하면 된다.</p>
+<h2 id="실행-확인"><a href="#실행-확인" class="headerlink" title="실행 확인"></a>실행 확인</h2><p>웹 브라우저로 <code>http://localhost:8080</code>에 접근하면 <code>Greetings from Spring Boot!</code>라는 문자열이 출력된 것을 확인할 수 있다.</p>
+<p>이것으로 그래들로 스프링 부트 시작하기 간단 예제는 종료.</p>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/tags/">Tag</a></li>
+         
+          <li><a href="/categories/">Category</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#JDK-및-Gradle-설치-확인"><span class="toc-number">1.</span> <span class="toc-text">JDK 및 Gradle 설치 확인</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Gradle-init"><span class="toc-number">2.</span> <span class="toc-text">Gradle init</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#build-gradle-내용-수정"><span class="toc-number">3.</span> <span class="toc-text">build.gradle 내용 수정</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Java-소스-추가"><span class="toc-number">4.</span> <span class="toc-text">Java 소스 추가</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#소스-디렉터리-추가"><span class="toc-number">4.1.</span> <span class="toc-text">소스 디렉터리 추가</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HelloController-java-생성"><span class="toc-number">4.2.</span> <span class="toc-text">HelloController.java 생성</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Application-java-생성"><span class="toc-number">4.3.</span> <span class="toc-text">Application.java 생성</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#빌드-또는-실행"><span class="toc-number">5.</span> <span class="toc-text">빌드 또는 실행</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#빌드"><span class="toc-number">5.1.</span> <span class="toc-text">빌드</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#실행"><span class="toc-number">5.2.</span> <span class="toc-text">실행</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#실행-확인"><span class="toc-number">6.</span> <span class="toc-text">실행 확인</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://jheloper.github.io/2018/02/getting-started-gradle-with-spring-boot/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://jheloper.github.io/2018/02/getting-started-gradle-with-spring-boot/&text=그래들(Gradle)로 스프링 부트(Spring Boot) 시작하기"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://jheloper.github.io/2018/02/getting-started-gradle-with-spring-boot/&title=그래들(Gradle)로 스프링 부트(Spring Boot) 시작하기"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://jheloper.github.io/2018/02/getting-started-gradle-with-spring-boot/&is_video=false&description=그래들(Gradle)로 스프링 부트(Spring Boot) 시작하기"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=그래들(Gradle)로 스프링 부트(Spring Boot) 시작하기&body=Check out this article: https://jheloper.github.io/2018/02/getting-started-gradle-with-spring-boot/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://jheloper.github.io/2018/02/getting-started-gradle-with-spring-boot/&title=그래들(Gradle)로 스프링 부트(Spring Boot) 시작하기"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://jheloper.github.io/2018/02/getting-started-gradle-with-spring-boot/&title=그래들(Gradle)로 스프링 부트(Spring Boot) 시작하기"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://jheloper.github.io/2018/02/getting-started-gradle-with-spring-boot/&title=그래들(Gradle)로 스프링 부트(Spring Boot) 시작하기"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://jheloper.github.io/2018/02/getting-started-gradle-with-spring-boot/&title=그래들(Gradle)로 스프링 부트(Spring Boot) 시작하기"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://jheloper.github.io/2018/02/getting-started-gradle-with-spring-boot/&name=그래들(Gradle)로 스프링 부트(Spring Boot) 시작하기&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://jheloper.github.io/2018/02/getting-started-gradle-with-spring-boot/&t=그래들(Gradle)로 스프링 부트(Spring Boot) 시작하기"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020
+    Jheloper
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/tags/">Tag</a></li>
+         
+          <li><a href="/categories/">Category</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-107872316-2', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'jheloper';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+
+</body>
+</html>

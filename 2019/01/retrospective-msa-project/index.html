@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="마이크로서비스 아키텍처 전환 프로젝트 회고이 글에는 2018년 회고와는 별개로, 마이크로서비스 아키텍처 전환 프로젝트에 대한 회고를 적어둔다. 7월, 마이크로서비스 아키텍처로의 첫걸음레거시 시스템과의 첫 만남이직할 때 어느 정도 들었던 말이 있어 각오를 했지만 레거시 시스템은 상상 이상이었다. 하나로 똘똘 뭉쳐있는 커다란 규모의 코드와 구조를 보고 막막했다">
+<meta name="keywords" content="MSA,Retrospective">
+<meta property="og:type" content="article">
+<meta property="og:title" content="마이크로서비스 아키텍처 전환 프로젝트 회고">
+<meta property="og:url" content="https://jheloper.github.io/2019/01/retrospective-msa-project/index.html">
+<meta property="og:site_name" content="Jheloper&#39;s Dev Log">
+<meta property="og:description" content="마이크로서비스 아키텍처 전환 프로젝트 회고이 글에는 2018년 회고와는 별개로, 마이크로서비스 아키텍처 전환 프로젝트에 대한 회고를 적어둔다. 7월, 마이크로서비스 아키텍처로의 첫걸음레거시 시스템과의 첫 만남이직할 때 어느 정도 들었던 말이 있어 각오를 했지만 레거시 시스템은 상상 이상이었다. 하나로 똘똘 뭉쳐있는 커다란 규모의 코드와 구조를 보고 막막했다">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2020-06-21T20:09:35.859Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="마이크로서비스 아키텍처 전환 프로젝트 회고">
+<meta name="twitter:description" content="마이크로서비스 아키텍처 전환 프로젝트 회고이 글에는 2018년 회고와는 별개로, 마이크로서비스 아키텍처 전환 프로젝트에 대한 회고를 적어둔다. 7월, 마이크로서비스 아키텍처로의 첫걸음레거시 시스템과의 첫 만남이직할 때 어느 정도 들었던 말이 있어 각오를 했지만 레거시 시스템은 상상 이상이었다. 하나로 똘똘 뭉쳐있는 커다란 규모의 코드와 구조를 보고 막막했다">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/p_favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/p_favicon.ico" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/p_favicon.ico">
+          
+        
+    
+    <!-- title -->
+    <title>마이크로서비스 아키텍처 전환 프로젝트 회고</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/tags/">Tag</a></li>
+         
+          <li><a href="/categories/">Category</a></li>
+        
+      </ul>
+    </span>
+    <br>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/02/run-npm-with-docker/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/01/retrospective-2018/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://jheloper.github.io/2019/01/retrospective-msa-project/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://jheloper.github.io/2019/01/retrospective-msa-project/&text=마이크로서비스 아키텍처 전환 프로젝트 회고"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://jheloper.github.io/2019/01/retrospective-msa-project/&title=마이크로서비스 아키텍처 전환 프로젝트 회고"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://jheloper.github.io/2019/01/retrospective-msa-project/&is_video=false&description=마이크로서비스 아키텍처 전환 프로젝트 회고"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=마이크로서비스 아키텍처 전환 프로젝트 회고&body=Check out this article: https://jheloper.github.io/2019/01/retrospective-msa-project/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://jheloper.github.io/2019/01/retrospective-msa-project/&title=마이크로서비스 아키텍처 전환 프로젝트 회고"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://jheloper.github.io/2019/01/retrospective-msa-project/&title=마이크로서비스 아키텍처 전환 프로젝트 회고"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://jheloper.github.io/2019/01/retrospective-msa-project/&title=마이크로서비스 아키텍처 전환 프로젝트 회고"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://jheloper.github.io/2019/01/retrospective-msa-project/&title=마이크로서비스 아키텍처 전환 프로젝트 회고"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://jheloper.github.io/2019/01/retrospective-msa-project/&name=마이크로서비스 아키텍처 전환 프로젝트 회고&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://jheloper.github.io/2019/01/retrospective-msa-project/&t=마이크로서비스 아키텍처 전환 프로젝트 회고"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#마이크로서비스-아키텍처-전환-프로젝트-회고"><span class="toc-number">1.</span> <span class="toc-text">마이크로서비스 아키텍처 전환 프로젝트 회고</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7월-마이크로서비스-아키텍처로의-첫걸음"><span class="toc-number">2.</span> <span class="toc-text">7월, 마이크로서비스 아키텍처로의 첫걸음</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#레거시-시스템과의-첫-만남"><span class="toc-number">2.1.</span> <span class="toc-text">레거시 시스템과의 첫 만남</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#그래서-어디서부터-시작할까"><span class="toc-number">2.2.</span> <span class="toc-text">그래서, 어디서부터 시작할까?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#비즈니스-도메인의-식별과-서비스의-분리"><span class="toc-number">2.3.</span> <span class="toc-text">비즈니스 도메인의 식별과 서비스의 분리</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-10월-구현의-시작-쏟아지는-일거리들…"><span class="toc-number">3.</span> <span class="toc-text">8 ~ 10월, 구현의 시작, 쏟아지는 일거리들…</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#REST-API"><span class="toc-number">3.1.</span> <span class="toc-text">REST API</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java-10-Spring-Boot-2-JPA-Gradle"><span class="toc-number">3.2.</span> <span class="toc-text">Java 10, Spring Boot 2, JPA, Gradle</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Retrofit-Lombok-JUnit"><span class="toc-number">3.3.</span> <span class="toc-text">Retrofit, Lombok, JUnit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AWS-EC2-ALB-VPC-Public-Private-Subnet-NAT-Gateway"><span class="toc-number">3.4.</span> <span class="toc-text">AWS EC2, ALB, VPC, Public/Private Subnet, NAT Gateway</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11월-12월-구현의-마무리-릴리즈-준비-이윽고-릴리즈"><span class="toc-number">4.</span> <span class="toc-text">11월 ~ 12월, 구현의 마무리, 릴리즈 준비, 이윽고 릴리즈</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#점진적-배포를-위한-준비"><span class="toc-number">4.1.</span> <span class="toc-text">점진적 배포를 위한 준비</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AWS에-프로덕션-서버-구축"><span class="toc-number">4.2.</span> <span class="toc-text">AWS에 프로덕션 서버 구축</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CI-Continuous-Integration-CD-Continuous-Delivery"><span class="toc-number">4.3.</span> <span class="toc-text">CI(Continuous Integration), CD(Continuous Delivery)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#슬랙-메시징-파일-로깅-DB-로깅"><span class="toc-number">4.4.</span> <span class="toc-text">슬랙 메시징, 파일 로깅, DB 로깅</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AWS-CloudWatch"><span class="toc-number">4.5.</span> <span class="toc-text">AWS CloudWatch</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#아직-가야할-길…"><span class="toc-number">5.</span> <span class="toc-text">아직 가야할 길…</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#서비스-간-통신-인터페이스-포맷-통일-및-문서화"><span class="toc-number">5.1.</span> <span class="toc-text">서비스 간 통신 인터페이스 포맷 통일 및 문서화</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#서비스-별-DB-분리"><span class="toc-number">5.2.</span> <span class="toc-text">서비스 별 DB 분리</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#API-게이트웨이의-도입"><span class="toc-number">5.3.</span> <span class="toc-text">API 게이트웨이의 도입</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#서비스-간-통신에-메시지-큐-도입"><span class="toc-number">5.4.</span> <span class="toc-text">서비스 간 통신에 메시지 큐 도입</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#회고를-마무리하며"><span class="toc-number">6.</span> <span class="toc-text">회고를 마무리하며</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        마이크로서비스 아키텍처 전환 프로젝트 회고
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Jheloper's Dev Log</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-01-09T13:30:00.000Z" itemprop="datePublished">2019-01-09</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/MSA/">MSA</a>, <a class="tag-link" href="/tags/Retrospective/">Retrospective</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="마이크로서비스-아키텍처-전환-프로젝트-회고"><a href="#마이크로서비스-아키텍처-전환-프로젝트-회고" class="headerlink" title="마이크로서비스 아키텍처 전환 프로젝트 회고"></a>마이크로서비스 아키텍처 전환 프로젝트 회고</h2><p>이 글에는 <a href="/2019/01/retrospective-2018">2018년 회고</a>와는 별개로, <code>마이크로서비스 아키텍처</code> 전환 프로젝트에 대한 회고를 적어둔다.</p>
+<h2 id="7월-마이크로서비스-아키텍처로의-첫걸음"><a href="#7월-마이크로서비스-아키텍처로의-첫걸음" class="headerlink" title="7월, 마이크로서비스 아키텍처로의 첫걸음"></a>7월, 마이크로서비스 아키텍처로의 첫걸음</h2><h3 id="레거시-시스템과의-첫-만남"><a href="#레거시-시스템과의-첫-만남" class="headerlink" title="레거시 시스템과의 첫 만남"></a>레거시 시스템과의 첫 만남</h3><p>이직할 때 어느 정도 들었던 말이 있어 각오를 했지만 레거시 시스템은 상상 이상이었다. 하나로 똘똘 뭉쳐있는 커다란 규모의 코드와 구조를 보고 막막했다. 일단 익숙하지 않은 코드라서 읽기 쉽지 않았고, 하나의 <code>서브 루틴</code>이 필요 이상으로 컸으며, 로직의 많은 부분을 데이터베이스 <code>SQL</code>로 처리하고 있었고, 같은 데이터를 두 번 이상 중복 조회하는 불필요한 코드도 있었다. <code>코드베이스(codebase)</code>의 덩치가 이미 꽤나 커져있는 상태였는데, 프레임워크는 물론 라이브러리 의존성 관리도 제대로 이뤄지지 않는 상태였다.</p>
+<p>코드 레벨뿐 아니라 아키텍처 레벨에서도 문제가 있었다. 서버는 여러 대가 있었고 <code>로드밸런서</code>에 연결되어 있었으나, 하나의 서버에서 하나의 서비스가 아닌 여러 개의 서비스를 실행하고 있어 특정 서비스에서 문제가 발생하면 그 여파가 다른 서비스에도 전파되는 상황이었다.</p>
+<h3 id="그래서-어디서부터-시작할까"><a href="#그래서-어디서부터-시작할까" class="headerlink" title="그래서, 어디서부터 시작할까?"></a>그래서, 어디서부터 시작할까?</h3><p>이전 회사에서도 하려고 했던 것을 하기로 했다. 커다란 시스템을 작은 규모의 서비스들로 분리하는 것. 바로, <code>마이크로서비스 아키텍처</code>의 도입.</p>
+<p><code>마이크로서비스 아키텍처</code>를 알기 전에도 내가 고민하던 것은 <strong>*”하나의 애플리케이션을 여러 부분으로 분리해서 구현하려면 어떤 방법이 있고 어떠한 장점과 단점, 한계점들이 있을까”*</strong> 였다. 작은 여러 부분으로 나누어 최대한 사이드 이펙트 없이 개발하는 게 가능하다면 “서로 영역이 다른 사람들이 모여 협업하는 데에 도움이 되지 않을까” 싶기도 했고 <strong>*”큰 문제를 그대로 다루는 것보다 작게 문제를 나누어 다루는 방법이 해결하는 데에 도움이 된다”*</strong> 라는 생각도 가지고 있었다.</p>
+<p><code>모놀리식 아키텍처</code>도, <code>마이크로서비스 아키텍처</code>도 각각 나름의 장단점들이 있으니 사용하기 나름이다. 하지만 현재 회사의 시스템 구조 상, <code>마이크로서비스 아키텍처</code>를 선택하는 것이 서비스가 더 성장하기 위한 초석이 될 것이라고 생각했고 그렇게 생각한 사람이 나뿐만은 아니었기 때문에 우리는 <code>마이크로서비스 아키텍처</code>로의 첫걸음을 나아가기로 결정했다.</p>
+<h3 id="비즈니스-도메인의-식별과-서비스의-분리"><a href="#비즈니스-도메인의-식별과-서비스의-분리" class="headerlink" title="비즈니스 도메인의 식별과 서비스의 분리"></a>비즈니스 도메인의 식별과 서비스의 분리</h3><p>가장 먼저 했던 일은 바로 비즈니스 도메인 식별이었다. 처음 접해보는 비즈니스였기 때문에 용어 자체도 익숙하지 않았지만 어떻게든 익숙해지고자 나름대로의 정리를 진행했다.</p>
+<p>모든 부분을 완벽하게 파악하고 나서 구조를 만들었으면 좋았겠지만 리소스는 한정되어 있었기 때문에 큰 흐름 위주로 파악했고, 그렇게 비즈니스의 일부분에 해당하는 몇 개의 비즈니스 도메인 영역을 분리할 수 있었다.</p>
+<p>그리고 그렇게 식별한 비즈니스 도메인 별로 서비스를 분리하여 구성하기로 결정했다. 물론 이 과정은 한 번에 “짜잔!”하고 이뤄지지 않았다. 서비스를 분리하다보니 “이 비즈니스 도메인은 좀 더 세분화할 수 있겠다”싶어서 원래 하나의 서비스로 구성하려던 것을 나누기도 하는 피드백 과정도 있었다.</p>
+<h2 id="8-10월-구현의-시작-쏟아지는-일거리들…"><a href="#8-10월-구현의-시작-쏟아지는-일거리들…" class="headerlink" title="8 ~ 10월, 구현의 시작, 쏟아지는 일거리들…"></a>8 ~ 10월, 구현의 시작, 쏟아지는 일거리들…</h2><h3 id="REST-API"><a href="#REST-API" class="headerlink" title="REST API"></a>REST API</h3><p>서비스 간 통신은 REST 방식을 채택했다. A 서비스 입장에서 B 서비스의 내부가 어떤 모습인지는 관심사가 아니라고 생각했다. A 서비스 입장에서의 관심사는 <strong>*”내가 원하는 것을 얻기 위해서는 어떤 형태로, 어디에 요청해야 하는가”*</strong> 와 <strong>*”내가 요청한 것에 대한 응답이 어떤 형태이며 무엇이 담겨있는가”*</strong> 라고 생각했다. 우리 서비스는 기본적으로 웹 서비스이기 때문에 HTTP 통신 위주였고, REST API 방식으로 서로 통신하는 것이 기술 중립적이며 최소한의 의존성으로 통신할 수 있는 방식이라고 셍각했다.</p>
+<h3 id="Java-10-Spring-Boot-2-JPA-Gradle"><a href="#Java-10-Spring-Boot-2-JPA-Gradle" class="headerlink" title="Java 10, Spring Boot 2, JPA, Gradle"></a>Java 10, Spring Boot 2, JPA, Gradle</h3><p><code>Java 10</code>을 사용했다. 글을 쓰고 있는 현재 최신 버전은 <code>Java 11</code>이지만 구현을 시작했을 때에는 최신 버전이 <code>Java 10</code>이었다. </p>
+<p>애로사항은 당연히 있었다. 일단 <code>OracleJDK</code>가 아닌 <code>OpenJDK</code>를 설치해보는 것이 처음이기도 했지만 이것은 워낙 레퍼런스가 많아서 어렵지 않았다. 처음에는 별 문제 없이 흘러갔으나 어느 순간, 특정 라이브러리가 컴파일에 필요했던 그 순간 컴파일 에러가 발생했다. <code>JDK</code>의 모듈 시스템을 잘 모르고 있었는데 <code>Java 9</code>부터 기본적으로 포함되어 있던 많은 라이브러리들이 외부 모듈로 분리되었고, 따로 필요한 모듈 사용을 선언해야 사용할 수 있다는 사실을 전혀 알지 못했었다. 다행히 구글링을 통해 해당 문제를 해결했으나 이유를 알고 매우 허무했던 기억이 난다.</p>
+<p>여기에 더해 <code>스프링 부트(Spring Boot) 2</code>와 <code>JPA</code>를 사용했다. 스프링 부트를 선택한 이유는 여러 가지가 있었는데, <code>스프링 프레임워크(Spring Framework)</code>의 환경 설정이 어렵다는 것을 이미 경험해봤고 <code>스프링 부트</code>는 기본적 설정이 이미 구성되어 있는 상태로, <code>XML</code> 설정이 아닌 코드에서의 설정 위주로, 일반적으로 필요한 라이브러리와 <code>WAS(Web Application Server)</code>를 내장하고 있는 상태로, 유용한 여러 부가 기능을 가지고, 빠르게 애플리케이션 구현을 시작할 수 있다는 장점이 있었기 때문이다.</p>
+<p><code>JPA</code>를 사용하기로 한 것은 내 입장에서는 약간 망설여지기도 했다. 내 입장에서야 <code>SQL</code>을 직접 건드리는 것보다 최근 데이터베이스 작업의 많은 부분들을 지원하는 <code>ORM(Object-Relational Mapping)</code>을 사용하는 것이 좋긴 했으나, 현재 시스템의 <code>SQL</code>들은 비즈니스 로직을 내포하고 있는 부분들이 있었다. 이 부분들을 <code>ORM</code>으로 완벽하게 대체 가능할 것인가, 하는 의구심이 들기는 했으나 <strong>*”데이터베이스 작업은 <code>ORM</code>으로, 비즈니스 로직은 데이터베이스에서 분리하여 애플리케이션 코드에서 하도록 수정”*</strong> 하면 괜찮을 거라는 생각에 <code>JPA</code> 도입에 적극 찬성했다.</p>
+<p>여기에도 애로사항은 있었는데, 아직은 기존의 데이터베이스와 독립적으로 서비스를 구성할 수 없었기 때문에 기존 데이터베이스와 연결하여 구성해야 한다는 점이었다. 별도의 DB를 구성하는 게 아닌, 기존의 데이터베이스와 연결하여 구성하는 방식은 <code>JPA</code>를 사용하면서는 처음 해보는 것이라서 생각보다 이래 저래 헤매기도 했다.</p>
+<p>빌드 및 의존성 관리에는 <code>메이븐(Maven)</code>을 사용할 수도 있었으나 <code>그래들(Gradle)</code>을 사용하기로 했다. <code>메이븐</code>의 <code>XML</code> 형식 명세보다는 <code>그래들</code>의 명세가 더 가독성이 좋다고 판단했고, 레퍼런스도 충분히 있었기 때문에 <code>그래들</code>을 선택하지 않을 이유가 없었다. 거기에 기능적으로 <code>메이븐</code>이 할 수 있는 일은 <code>그래들</code>로도 충분히 소화할 수 있는 상태였다.</p>
+<h3 id="Retrofit-Lombok-JUnit"><a href="#Retrofit-Lombok-JUnit" class="headerlink" title="Retrofit, Lombok, JUnit"></a>Retrofit, Lombok, JUnit</h3><p><code>레트로핏(Retrofit)</code>은 안드로이드에서 많이 사용하고 있는 HTTP 클라이언트 라이브러리다. REST 방식에 적합하게 구현되어 있으며, 내가 원하던 <strong><em>동기/비동기 요청을 선택할 수 있다</em></strong> 는 점, <strong><em>API의 명세와 실행 코드를 분리</em></strong> 했다는 점, <strong><em>타입 세이프(Type-safe)한 통신 코드를 구현할 수 있다</em></strong> 는 점이 맘에 들어 선택했다.</p>
+<p>몇 가지 애로사항이 있어서 <code>롬복(Lombok)</code>을 사용하지 못하고 있다가 CTO님이 오고 나서 적극 도입했다. 확실히 롬복을 사용하니 <strong><em>불필요한 보일러 플레이트 코드를 줄이면서 코드의 가독성을 향상</em></strong> 시킬 수 있었다.</p>
+<p>추가적으로, <code>TDD</code>까지는 아니더라도 최소한의 테스트 코드 이상을 만들고자 노력했다. <code>JUnit</code>을 사용하여 단위 테스트 코드를 작성했고, 이 과정에서 <code>Mock</code>이 필요한 경우 <code>Mock</code> 라이브러리인 <code>Mockito</code>를 사용해서 테스트를 작성했다.</p>
+<h3 id="AWS-EC2-ALB-VPC-Public-Private-Subnet-NAT-Gateway"><a href="#AWS-EC2-ALB-VPC-Public-Private-Subnet-NAT-Gateway" class="headerlink" title="AWS EC2, ALB, VPC, Public/Private Subnet, NAT Gateway"></a>AWS EC2, ALB, VPC, Public/Private Subnet, NAT Gateway</h3><p>AWS <code>EC2</code>는 개인적으로 다뤄본 경험도 있었기 때문에 크게 걸림돌이 되지는 않았다. <code>EC2</code> 인스턴스를 생성하는 것은 별다른 어려움이 없었고, 추후에 인스턴스 생성을 쉽게 할 수 있도록 환경 구성이 끝난 상태의 <code>AMI</code>를 생성해두었다. <code>ALB(Application Load Balancer)</code>의 구성도 레퍼런스를 참고하여 어렵지 않게 마칠 수 있었다.</p>
+<p><code>AWS VPC</code>와 <code>퍼블릭/프라이빗 서브넷(Public/Private Subnet)</code> 개념이 처음에는 익숙치 않아서 헤맨 부분도 있었다. 이전에 AWS를 사용했을 때에는 별다른 네트워크 설정 없이 기본으로만 사용했다면 이번에는 직접 서브넷도 구성하고, 서브넷을 퍼블릭과 프라이빗으로 나눠도 보고, 각 서브넷마다의 보안 그룹도 설정해보고, 게이트웨이도 설정해볼 수 있었다.</p>
+<p>회사 서비스 특성상 다양한 외부 API들과 연동될 필요가 있었는데, 외부 API들이 IP로 접근 제한을 걸어두는 경우가 있어서 새로운 서버가 추가되는 경우 제약이 있었다. 이것은 프로덕션 서버에만 해당하는 것이 아니고 테스트 서버에도 해당되는 경우가 있었으며, 테스트가 원활하게 진행되지 못하는 상황도 발생했다.</p>
+<p>위와 같은 문제점을 되도록 축소시키고자 외부 API 연동이 필요한 서버들을 <strong><em>하나의 동일한 아웃바운드 IP를 사용하도록 <code>NAT 게이트웨이(Gateway)</code>를 사용</em></strong> 하는 방법을 조사했고, 해당 방법이 유효한 것인지 개인적으로 프로토타입을 구성하여 검증했다. 프로토타입을 통한 검증으로 실제 가능한 방법이라는 확신을 얻었고, 현재 새로운 서비스에 해당 방법을 적용할 수 있었다.</p>
+<p>이렇게 <code>NAT 게이트웨이</code>를 구성하여 필요한 서버들의 아웃바운드 IP를 일원화하고, 이러한 과정 중에 서브넷을 직접 구성하면서 <code>퍼블릭 서브넷</code>과 <code>프라이빗 서브넷</code>의 차이가 무엇인지도 확실히 알 수 있었던 좋은 기회였다. 역시 개념이 제대로 이해되지 않을 때에는 직접 부딪혀보는 것도 좋은 방법 중 하나인 것 같다.</p>
+<h2 id="11월-12월-구현의-마무리-릴리즈-준비-이윽고-릴리즈"><a href="#11월-12월-구현의-마무리-릴리즈-준비-이윽고-릴리즈" class="headerlink" title="11월 ~ 12월, 구현의 마무리, 릴리즈 준비, 이윽고 릴리즈"></a>11월 ~ 12월, 구현의 마무리, 릴리즈 준비, 이윽고 릴리즈</h2><h3 id="점진적-배포를-위한-준비"><a href="#점진적-배포를-위한-준비" class="headerlink" title="점진적 배포를 위한 준비"></a>점진적 배포를 위한 준비</h3><p>기존에 구현한 새로운 서비스 전체를 한꺼번에 배포하는 것은 꽤 큰 부분에 영향을 줄 수 있다는 판단 하에 부분적으로 먼저 배포하고, 나머지 부분은 점진적으로 배포하는 방법을 채택했다.</p>
+<p>그리고 본격적인 QA 테스트 및 통합 테스트가 시작되었기 때문에 꽤 정신없는 기간을 보냈다. 내가 구현한 부분으로 끝나는 것이 아니었기 때문에 여러 가지를 살펴볼 수 밖에 없었다.</p>
+<h3 id="AWS에-프로덕션-서버-구축"><a href="#AWS에-프로덕션-서버-구축" class="headerlink" title="AWS에 프로덕션 서버 구축"></a>AWS에 프로덕션 서버 구축</h3><p>테스트 서버가 아닌 프로덕션 서버 구축을 시작했다. 이미 테스트 서버를 구축하면서 만들어 둔 AMI도 있었으니까 크게 어려운 것은 없었다. 다만 프로덕션 서버는 이중화가 필요했기 때문에 같은 작업을 2번 이상 반복해야 했고, 구축 후 정상 작동하는지 테스트도 해봐야 했다.</p>
+<h3 id="CI-Continuous-Integration-CD-Continuous-Delivery"><a href="#CI-Continuous-Integration-CD-Continuous-Delivery" class="headerlink" title="CI(Continuous Integration), CD(Continuous Delivery)"></a>CI(Continuous Integration), CD(Continuous Delivery)</h3><p>구현 중에는 테스트 서버 배포를 직접 수행했다. <code>스프링 부트</code>로 만든 애플리케이션은 내장 <code>WAS(Web Application Server)</code>가 있어서 빌드된 <code>jar</code> 파일을 바로 실행하면 끝이었고, 테스트 서버에 직접 <code>jar</code> 파일을 업로드하여 실행시키는 식으로 진행해도 문제가 없었으니까.</p>
+<p>아니, 사실 문제가 없는 게 아니었다. 일단 내가 번거로웠다. 빌드해야 하는 브랜치를 체크아웃하고, 빌드를 실행시켜 <code>jar</code> 파일을 얻고, <code>jar</code> 파일을 테스트 서버에 업로드하고, 테스트 서버에 접속해서 서버 시작 스크립트를 실행해야 했으니까 당연히 번거로웠다. 그래서 <code>CI</code>, <code>CD</code>를 구축했으면 좋겠다, 라고 생각했지만 내가 직접 하게 될 줄은 몰랐다.</p>
+<p>새로운 서비스 한정으로 내가 직접 <code>젠킨스(Jenkins)</code> 서버를 구축했는데, 밑바닥부터 구축해보는 건 처음이라 시간이 걸리긴 했다. 처음엔 빌드하여 테스트 서버에 배포할 수 있는 <code>젠킨스 프로젝트</code> 하나만 구성해서 사용했고, AWS에 프로덕션 서버를 구성했을 때에는 배포해야 하는 서버가 여러 대이면서 한꺼번에 동시 배포하는 것이 아닌, 순차적 배포가 필요했기 때문에 배포할 서버를 선택하여 배포할 수 있는 <code>젠킨스 프로젝트</code>를 새로 만들었다.</p>
+<p>그러나 위와 같이 <code>젠킨스 프로젝트</code>를 구성하고 나서 발견한 문제가 있었다. 빌드 및 배포 그 자체는 금방 완료되기 때문에 서버에 새로 배포한 애플리케이션이 실행되기까지는 20~30초 정도면 충분했다. 하지만 그 짧은 시간 동안 해당 서버로 들어온 요청은 처리할 수가 없는 요청이 될 것이다. 그렇다고 배포할 때마다 <code>로드밸런서</code>에서 해당 서버를 제외시켜두었다가 배포하고 애플리케이션 정상 동작을 확인하고 다시 <code>로드밸런서</code>에 추가시킨 후 라우팅이 정상적으로 이뤄지는지 확인하는 것은 정말 번거로운 일이었다. <strong><em>서버가 점점 늘어나는 스케일아웃 상황을 가정해보면 최대한 다운타임을 없애기 위해서 위와 같은 작업을 수동으로 진행한다는 것은 실수의 여지가 크기 때문에 위험</em></strong> 했다.</p>
+<p>그래서 여러 가지 조사하던 중 <code>블루 그린 배포(Blue Green Deployment)</code> 방법을 알게 되었고, AWS에서 만든 <code>CodeDeploy</code>라는 서비스가 이미 <code>블루 그린 배포</code> 방식을 지원하고 있다는 사실도 알 수 있었다. 최대한 수동으로 하는 번거롭고 위험한 작업을 줄이기 위해 <code>CodeDeploy</code>를 적용하기로 했고, 현재는 성공적으로 적용하여 <code>젠킨스</code>에서 빌드가 성공적으로 완료되면 해당 결과물로 <code>CodeDeploy</code>의 <code>블루 그린 배포</code>가 실행되고 있으며, 이것은 <strong><em>다운타임 없이 새로운 코드를 배포할 수 있고, 원한다면 언제든 이전 상태로 롤백할 수 있는 CI, CD 환경을 구축</em></strong> 했다는 의미이다.</p>
+<h3 id="슬랙-메시징-파일-로깅-DB-로깅"><a href="#슬랙-메시징-파일-로깅-DB-로깅" class="headerlink" title="슬랙 메시징, 파일 로깅, DB 로깅"></a>슬랙 메시징, 파일 로깅, DB 로깅</h3><p>예외 상황 발생 시 <code>슬랙(Slack)</code> 알림 채널에 메시지를 보내도록 기능을 추가했다. 릴리즈 전에 CTO님의 의견에 따라 추가했는데, 확실히 도움이 됐다. 매순간 메시지를 모니터링하는 것은 힘들지만 적어도 예외 상황이 발생했을 경우 조금이라도 빠른 대처를 취하는 데에 큰 도움이 됐으며, <code>파일 로깅</code>과 <code>DB 로깅</code>을 통해 그 원인을 빠르게 파악할 수 있도록 구성해두었다.</p>
+<h3 id="AWS-CloudWatch"><a href="#AWS-CloudWatch" class="headerlink" title="AWS CloudWatch"></a>AWS CloudWatch</h3><p>일단 <code>로드밸런서</code>와 서버 인스턴스들에 여러 가지 지표를 추가하여 알림을 구성해놨다. 다만 위의 <code>블루 그린 배포</code> 방식으로 변경하면서 기존 인스턴스들에 설정되었던 알림을 사용할 수 없게 되었는데, 배포할 때마다 새로운 <code>오토 스케일링 그룹</code>으로 인스턴스를 생성하기 때문이다. 그래서 현재 <code>오토 스케일링 그룹</code>에 <code>CloudWatch</code> 지표를 추가하고 알림을 구성할 수 없을까, 생각하고 있다.</p>
+<h2 id="아직-가야할-길…"><a href="#아직-가야할-길…" class="headerlink" title="아직 가야할 길…"></a>아직 가야할 길…</h2><p>이렇게 2018년의 <code>마이크로서비스 아키텍처</code> 전환 프로젝트의 첫걸음은 내디뎠으나, 앞으로 기다리고 있는 것들이 더 많을 것이다. 일단 그중에서 당장 생각나는 일부만이라도 적어두고자 한다.</p>
+<h3 id="서비스-간-통신-인터페이스-포맷-통일-및-문서화"><a href="#서비스-간-통신-인터페이스-포맷-통일-및-문서화" class="headerlink" title="서비스 간 통신 인터페이스 포맷 통일 및 문서화"></a>서비스 간 통신 인터페이스 포맷 통일 및 문서화</h3><p>이번 전환 프로젝트에서 모든 서비스를 전부 내가 구현한 것은 아니었다. 일단 3개의 서비스를 만들었고 기본적인 골격은 내가 잡았으나 그중 2개는 세부 구현을 내가 담당했고, 다른 서비스의 세부 구현은 다른 팀원이 담당했다. 구현하면서 처음에 고민했던 서비스 간 통신 인터페이스 포맷은 일단 통일시켰으나, 아직 부분적으로 통일되지 않은 부분들이 있어 논의를 통해 제대로 규격화하고 문서화하는 작업이 필요하다.</p>
+<p>거기에 더하자면 서비스가 다양해지면서 서로 간의 인터페이스를 문서 파일로 따로 공유하는 것이 힘들어질 것에 대비하여 <code>스웨거(Swagger)</code>의 도입을 고민하고 있다.</p>
+<h3 id="서비스-별-DB-분리"><a href="#서비스-별-DB-분리" class="headerlink" title="서비스 별 DB 분리"></a>서비스 별 DB 분리</h3><p>아직 서비스 별 DB를 분리하지 못했다. 모든 서비스들이 동일한 DB에 연결되어 있는데, 이는 아직 <code>마이크로서비스 아키텍처</code>로의 전환에 있어서 큰 걸림돌이다. 결론적으로는 모든 서비스들이 각자의 DB를 가지도록 구성하는 것이 목표이다.</p>
+<h3 id="API-게이트웨이의-도입"><a href="#API-게이트웨이의-도입" class="headerlink" title="API 게이트웨이의 도입"></a>API 게이트웨이의 도입</h3><p>아직 서비스가 많지 않아 <code>API 게이트웨이</code>를 도입하지 않았다. 허나 다른 서비스들에 대한 의존성을 최소화하기 위해서라도, 그리고 레거시 시스템으로의 라우팅을 제어하는 목적으로라도 <code>API 게이트웨이</code>의 도입은 피할 수 없을 것으로 예상하고 있다.</p>
+<h3 id="서비스-간-통신에-메시지-큐-도입"><a href="#서비스-간-통신에-메시지-큐-도입" class="headerlink" title="서비스 간 통신에 메시지 큐 도입"></a>서비스 간 통신에 메시지 큐 도입</h3><p>서비스 간 통신에 <code>메시지 큐</code>를 도입하는 것이 좋겠다고 생각하고 있다. 물론 모든 서비스 간 통신에 <code>메시지 큐</code>가 필요하지는 않으나, 특정 구간에서 <code>메시지 큐</code>를 통해 비동기로 작업을 처리할 필요성을 느끼고 있다.</p>
+<h2 id="회고를-마무리하며"><a href="#회고를-마무리하며" class="headerlink" title="회고를 마무리하며"></a>회고를 마무리하며</h2><p>쓰다보니 글이 길어졌다. 후에 다시 이 글을 봤을 때에 내가 했던 것들을 잘 기억할 수 있을지 모르니, 좀 더 체계적으로 지식을 정리하는 방법이 필요할 듯 하다.</p>
+<p>사실 이렇게 설계부터 구현, 테스트, 릴리즈, 운영 및 관리까지 하나의 사이클을 통째로 경험해 본 것은 나도 처음이라 분명 미숙한 점은 있었다. 애초에 이런 상황 속에서 개발하게 될 줄은 예상도 못했고, 내 장밋빛 상상은 물론 이뤄지지 않았다. 현실은 역시 가혹했다(!). 그렇다고 안 좋은 일들만 있었던 것은 아니었다. 분명 더 나아진 점도 있었고, 나 개인적으로는 유익하다고 느낄만한 경험들도 상당수 있었다.</p>
+<p>특히 이번 프로젝트 경험을 통해 그저 지식으로만 가지고 있던 부분들을 실체화해볼 수 있었으며, 나 자신이 어느 부분에서 아직 부족한지도 알 수 있었다. 이것만으로도 내게는 큰 수확이라고 생각한다.</p>
+<p>이번 프로젝트는 릴리즈를 통해 마이크로서비스 전환의 초석, 그것도 일부분 정도를 실현했으니 남아있는 부분들이 훨씬 더 많은 편이다. 막막하면서도, 한 번 해보고 싶다는 생각이 든다. 아직 덜 힘들어서(절대 그대로 받아들이지 말 것, 힘들다는 생각을 하는 그 순간만은 진심으로 힘들다…) 그런건지 모르겠지만, 그래도 <strong><em>어제보다 나아간 오늘의 내가, 오늘보다 나아갈 내일의 내가 되고 싶다</em></strong> 는 마음을 잊지 말자.</p>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/tags/">Tag</a></li>
+         
+          <li><a href="/categories/">Category</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#마이크로서비스-아키텍처-전환-프로젝트-회고"><span class="toc-number">1.</span> <span class="toc-text">마이크로서비스 아키텍처 전환 프로젝트 회고</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7월-마이크로서비스-아키텍처로의-첫걸음"><span class="toc-number">2.</span> <span class="toc-text">7월, 마이크로서비스 아키텍처로의 첫걸음</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#레거시-시스템과의-첫-만남"><span class="toc-number">2.1.</span> <span class="toc-text">레거시 시스템과의 첫 만남</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#그래서-어디서부터-시작할까"><span class="toc-number">2.2.</span> <span class="toc-text">그래서, 어디서부터 시작할까?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#비즈니스-도메인의-식별과-서비스의-분리"><span class="toc-number">2.3.</span> <span class="toc-text">비즈니스 도메인의 식별과 서비스의 분리</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-10월-구현의-시작-쏟아지는-일거리들…"><span class="toc-number">3.</span> <span class="toc-text">8 ~ 10월, 구현의 시작, 쏟아지는 일거리들…</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#REST-API"><span class="toc-number">3.1.</span> <span class="toc-text">REST API</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java-10-Spring-Boot-2-JPA-Gradle"><span class="toc-number">3.2.</span> <span class="toc-text">Java 10, Spring Boot 2, JPA, Gradle</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Retrofit-Lombok-JUnit"><span class="toc-number">3.3.</span> <span class="toc-text">Retrofit, Lombok, JUnit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AWS-EC2-ALB-VPC-Public-Private-Subnet-NAT-Gateway"><span class="toc-number">3.4.</span> <span class="toc-text">AWS EC2, ALB, VPC, Public/Private Subnet, NAT Gateway</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11월-12월-구현의-마무리-릴리즈-준비-이윽고-릴리즈"><span class="toc-number">4.</span> <span class="toc-text">11월 ~ 12월, 구현의 마무리, 릴리즈 준비, 이윽고 릴리즈</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#점진적-배포를-위한-준비"><span class="toc-number">4.1.</span> <span class="toc-text">점진적 배포를 위한 준비</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AWS에-프로덕션-서버-구축"><span class="toc-number">4.2.</span> <span class="toc-text">AWS에 프로덕션 서버 구축</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CI-Continuous-Integration-CD-Continuous-Delivery"><span class="toc-number">4.3.</span> <span class="toc-text">CI(Continuous Integration), CD(Continuous Delivery)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#슬랙-메시징-파일-로깅-DB-로깅"><span class="toc-number">4.4.</span> <span class="toc-text">슬랙 메시징, 파일 로깅, DB 로깅</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AWS-CloudWatch"><span class="toc-number">4.5.</span> <span class="toc-text">AWS CloudWatch</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#아직-가야할-길…"><span class="toc-number">5.</span> <span class="toc-text">아직 가야할 길…</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#서비스-간-통신-인터페이스-포맷-통일-및-문서화"><span class="toc-number">5.1.</span> <span class="toc-text">서비스 간 통신 인터페이스 포맷 통일 및 문서화</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#서비스-별-DB-분리"><span class="toc-number">5.2.</span> <span class="toc-text">서비스 별 DB 분리</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#API-게이트웨이의-도입"><span class="toc-number">5.3.</span> <span class="toc-text">API 게이트웨이의 도입</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#서비스-간-통신에-메시지-큐-도입"><span class="toc-number">5.4.</span> <span class="toc-text">서비스 간 통신에 메시지 큐 도입</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#회고를-마무리하며"><span class="toc-number">6.</span> <span class="toc-text">회고를 마무리하며</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://jheloper.github.io/2019/01/retrospective-msa-project/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://jheloper.github.io/2019/01/retrospective-msa-project/&text=마이크로서비스 아키텍처 전환 프로젝트 회고"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://jheloper.github.io/2019/01/retrospective-msa-project/&title=마이크로서비스 아키텍처 전환 프로젝트 회고"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://jheloper.github.io/2019/01/retrospective-msa-project/&is_video=false&description=마이크로서비스 아키텍처 전환 프로젝트 회고"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=마이크로서비스 아키텍처 전환 프로젝트 회고&body=Check out this article: https://jheloper.github.io/2019/01/retrospective-msa-project/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://jheloper.github.io/2019/01/retrospective-msa-project/&title=마이크로서비스 아키텍처 전환 프로젝트 회고"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://jheloper.github.io/2019/01/retrospective-msa-project/&title=마이크로서비스 아키텍처 전환 프로젝트 회고"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://jheloper.github.io/2019/01/retrospective-msa-project/&title=마이크로서비스 아키텍처 전환 프로젝트 회고"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://jheloper.github.io/2019/01/retrospective-msa-project/&title=마이크로서비스 아키텍처 전환 프로젝트 회고"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://jheloper.github.io/2019/01/retrospective-msa-project/&name=마이크로서비스 아키텍처 전환 프로젝트 회고&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://jheloper.github.io/2019/01/retrospective-msa-project/&t=마이크로서비스 아키텍처 전환 프로젝트 회고"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020
+    Jheloper
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/tags/">Tag</a></li>
+         
+          <li><a href="/categories/">Category</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-107872316-2', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'jheloper';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+
+</body>
+</html>

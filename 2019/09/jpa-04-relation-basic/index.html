@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="연관관계 매핑의 핵심 키워드 방향성(Direction) : 단방향, 양방향. 다중성(Multiplicity) : 다대일, 일대다, 일대일, 다대다. 연관관계의 주인(Owner) : 양방향 연관관계인 경우 연관관계의 주인을 지정해야 한다.  객체 연관관계와 테이블 연관관계연관관계는 테이블 연관관계와 객체 연관관계로 분류할 수 있다. 테이블은 외래키로 연관관">
+<meta name="keywords" content="JPA,ORM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JPA(Java Persistence API) 04 - 연관관계(기본)">
+<meta property="og:url" content="https://jheloper.github.io/2019/09/jpa-04-relation-basic/index.html">
+<meta property="og:site_name" content="Jheloper&#39;s Dev Log">
+<meta property="og:description" content="연관관계 매핑의 핵심 키워드 방향성(Direction) : 단방향, 양방향. 다중성(Multiplicity) : 다대일, 일대다, 일대일, 다대다. 연관관계의 주인(Owner) : 양방향 연관관계인 경우 연관관계의 주인을 지정해야 한다.  객체 연관관계와 테이블 연관관계연관관계는 테이블 연관관계와 객체 연관관계로 분류할 수 있다. 테이블은 외래키로 연관관">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://jheloper.github.io/images/jpa-logo.png">
+<meta property="og:updated_time" content="2020-06-21T20:09:35.863Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JPA(Java Persistence API) 04 - 연관관계(기본)">
+<meta name="twitter:description" content="연관관계 매핑의 핵심 키워드 방향성(Direction) : 단방향, 양방향. 다중성(Multiplicity) : 다대일, 일대다, 일대일, 다대다. 연관관계의 주인(Owner) : 양방향 연관관계인 경우 연관관계의 주인을 지정해야 한다.  객체 연관관계와 테이블 연관관계연관관계는 테이블 연관관계와 객체 연관관계로 분류할 수 있다. 테이블은 외래키로 연관관">
+<meta name="twitter:image" content="https://jheloper.github.io/images/jpa-logo.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/p_favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/p_favicon.ico" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/p_favicon.ico">
+          
+        
+    
+    <!-- title -->
+    <title>JPA(Java Persistence API) 04 - 연관관계(기본)</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/tags/">Tag</a></li>
+         
+          <li><a href="/categories/">Category</a></li>
+        
+      </ul>
+    </span>
+    <br>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/12/book-review-dynamic-programming-for-coding-interviews/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/07/retrospective-2019-q2/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://jheloper.github.io/2019/09/jpa-04-relation-basic/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://jheloper.github.io/2019/09/jpa-04-relation-basic/&text=JPA(Java Persistence API) 04 - 연관관계(기본)"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://jheloper.github.io/2019/09/jpa-04-relation-basic/&title=JPA(Java Persistence API) 04 - 연관관계(기본)"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://jheloper.github.io/2019/09/jpa-04-relation-basic/&is_video=false&description=JPA(Java Persistence API) 04 - 연관관계(기본)"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=JPA(Java Persistence API) 04 - 연관관계(기본)&body=Check out this article: https://jheloper.github.io/2019/09/jpa-04-relation-basic/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://jheloper.github.io/2019/09/jpa-04-relation-basic/&title=JPA(Java Persistence API) 04 - 연관관계(기본)"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://jheloper.github.io/2019/09/jpa-04-relation-basic/&title=JPA(Java Persistence API) 04 - 연관관계(기본)"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://jheloper.github.io/2019/09/jpa-04-relation-basic/&title=JPA(Java Persistence API) 04 - 연관관계(기본)"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://jheloper.github.io/2019/09/jpa-04-relation-basic/&title=JPA(Java Persistence API) 04 - 연관관계(기본)"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://jheloper.github.io/2019/09/jpa-04-relation-basic/&name=JPA(Java Persistence API) 04 - 연관관계(기본)&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://jheloper.github.io/2019/09/jpa-04-relation-basic/&t=JPA(Java Persistence API) 04 - 연관관계(기본)"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#연관관계-매핑의-핵심-키워드"><span class="toc-number">1.</span> <span class="toc-text">연관관계 매핑의 핵심 키워드</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#객체-연관관계와-테이블-연관관계"><span class="toc-number">2.</span> <span class="toc-text">객체 연관관계와 테이블 연관관계</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#연관관계의-주인-외래키-관리자"><span class="toc-number">3.</span> <span class="toc-text">연관관계의 주인(외래키 관리자)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#다대일-연관관계"><span class="toc-number">4.</span> <span class="toc-text">다대일 연관관계</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#단방향"><span class="toc-number">4.1.</span> <span class="toc-text">단방향</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ManyToOne"><span class="toc-number">4.2.</span> <span class="toc-text">@ManyToOne</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JoinColumn"><span class="toc-number">4.3.</span> <span class="toc-text">@JoinColumn</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#양방향"><span class="toc-number">4.4.</span> <span class="toc-text">양방향</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#일대다-연관관계"><span class="toc-number">5.</span> <span class="toc-text">일대다 연관관계</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#단방향-1"><span class="toc-number">5.1.</span> <span class="toc-text">단방향</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#OneToMany"><span class="toc-number">5.2.</span> <span class="toc-text">@OneToMany</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#양방향-1"><span class="toc-number">5.3.</span> <span class="toc-text">양방향</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#일대일-연관관계"><span class="toc-number">6.</span> <span class="toc-text">일대일 연관관계</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#단방향-2"><span class="toc-number">6.1.</span> <span class="toc-text">단방향</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#OneToOne"><span class="toc-number">6.2.</span> <span class="toc-text">@OneToOne</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#양방향-2"><span class="toc-number">6.3.</span> <span class="toc-text">양방향</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#다대다-연관관계"><span class="toc-number">7.</span> <span class="toc-text">다대다 연관관계</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#단방향-3"><span class="toc-number">7.1.</span> <span class="toc-text">단방향</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ManyToMany"><span class="toc-number">7.2.</span> <span class="toc-text">@ManyToMany</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JoinTable"><span class="toc-number">7.3.</span> <span class="toc-text">@JoinTable</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#양방향-3"><span class="toc-number">7.4.</span> <span class="toc-text">양방향</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#다대다-관계의-한계"><span class="toc-number">7.5.</span> <span class="toc-text">다대다 관계의 한계</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        JPA(Java Persistence API) 04 - 연관관계(기본)
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Jheloper's Dev Log</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-09-15T13:00:00.000Z" itemprop="datePublished">2019-09-15</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/JPA/">JPA</a>, <a class="tag-link" href="/tags/ORM/">ORM</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p><img src="/images/jpa-logo.png" alt></p>
+<h2 id="연관관계-매핑의-핵심-키워드"><a href="#연관관계-매핑의-핵심-키워드" class="headerlink" title="연관관계 매핑의 핵심 키워드"></a>연관관계 매핑의 핵심 키워드</h2><ul>
+<li>방향성(Direction) : 단방향, 양방향.</li>
+<li>다중성(Multiplicity) : 다대일, 일대다, 일대일, 다대다.</li>
+<li>연관관계의 주인(Owner) : 양방향 연관관계인 경우 연관관계의 주인을 지정해야 한다.</li>
+</ul>
+<h2 id="객체-연관관계와-테이블-연관관계"><a href="#객체-연관관계와-테이블-연관관계" class="headerlink" title="객체 연관관계와 테이블 연관관계"></a>객체 연관관계와 테이블 연관관계</h2><p>연관관계는 <strong>테이블 연관관계</strong>와 <strong>객체 연관관계</strong>로 분류할 수 있다. <strong><em>테이블은 외래키로 연관관계를 맺으며 객체는 참조로 연관관계를 맺는다</em></strong>.</p>
+<p>참조를 통한 객체 연관관계는 언제나 단방향 관계, 외래키를 통한 테이블 연관관계는 양방항 관계이다. 객체 연관관계 중 양방향 관계는 정확히 이야기하면 <em>서로 다른 단방향 관계 2개</em>라고 할 수 있다. 반면 테이블은 외래키 하나로 양방향 관계가 가능하다.</p>
+<h2 id="연관관계의-주인-외래키-관리자"><a href="#연관관계의-주인-외래키-관리자" class="headerlink" title="연관관계의 주인(외래키 관리자)"></a>연관관계의 주인(외래키 관리자)</h2><p>엔티티를 양방향 연관관계로 설정하면 객체의 참조는 둘인데 외래키는 하나이므로 차이가 발생하는데 JPA에서는 두 객체 연관관계 중 하나를 정해서 테이블의 외래키를 관리해야 한다. 이것을 <strong>연관관계의 주인(Owner)</strong>이라고 한다.</p>
+<p>연관관계의 주인만이 데이터베이스 연관관계에 매핑되고 외래키를 관리(등록, 수정, 삭제)할 수 있다. 반면 주인이 아닌 쪽은 읽기만 할 수 있다.</p>
+<p>주의할 점은, 연관관계의 주인은 <strong>비즈니스 중요도가 아닌 외래키의 위치와 관련해서 결정</strong>한다는 것이다. 연관관계의 주인을 정한다는 것은 사실 <strong>외래키 관리자를 선택하는 것</strong>이며, 따라서 외래 키가 존재하는 테이블로 정해야 한다.</p>
+<p>연관관계의 주인은 mappedBy 속성을 사용하지 않고, 주인이 아닌 쪽은 mappedBy 속성을 사용해서 연관관계의 주인을 지정해야 한다. <em>mappedBy 속성에 지정되는 값은 연관관계의 주인인 엔티티의 참조 필드명</em>이다.</p>
+<h2 id="다대일-연관관계"><a href="#다대일-연관관계" class="headerlink" title="다대일 연관관계"></a>다대일 연관관계</h2><h3 id="단방향"><a href="#단방향" class="headerlink" title="단방향"></a>단방향</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="meta">@Table</span>(name = <span class="string">"member"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Member</span> </span>&#123;</span><br><span class="line">		<span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@ManyToOne</span></span><br><span class="line">		<span class="meta">@JoinColumn</span>(name = <span class="string">"team_id"</span>)</span><br><span class="line">    <span class="keyword">private</span> Team team;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="meta">@Table</span>(name = <span class="string">"team"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Team</span> </span>&#123;</span><br><span class="line">		<span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="ManyToOne"><a href="#ManyToOne" class="headerlink" title="@ManyToOne"></a>@ManyToOne</h3><p>다대일 관계를 매핑할 때 사용한다.</p>
+<ul>
+<li><code>optional</code> : 기본값 true. false로 설정하면 연관된 엔티티가 반드시 있어야 한다.</li>
+<li><code>fetch</code> : 페치 전략을 설정한다.</li>
+<li><code>cascade</code> : 영속성 전이 기능을 설정한다.</li>
+<li><code>targetEntity</code> : 연관된 엔티티 타입 정보를 설정한다.</li>
+</ul>
+<h3 id="JoinColumn"><a href="#JoinColumn" class="headerlink" title="@JoinColumn"></a>@JoinColumn</h3><p>외래키를 매핑할 때 사용한다. 이 어노테이션은 생략할 수 있다.</p>
+<ul>
+<li><code>name</code> : 외래키의 이름을 지정한다. 생략할 경우 외래키를 찾을 때 기본 전략을 사용한다.</li>
+<li><code>referencedColumnName</code> : 외래키가 참조하는 대상 테이블의 컬럼명. 기본값은 참조 테이블의 기본키 컬럼명.</li>
+<li><code>foreignKey</code> : 외래키 제약조건을 DDL로 직접 지정할 수 있다.</li>
+</ul>
+<p><code>@JoinColumn</code>을 생략하면 외래키를 찾을 때 기본 전략이 있다. 기본 전략은 <strong>“필드명_참조테이블컬럼명”</strong>이다.</p>
+<h3 id="양방향"><a href="#양방향" class="headerlink" title="양방향"></a>양방향</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="meta">@Table</span>(name = <span class="string">"team"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Team</span> </span>&#123;</span><br><span class="line">		<span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">		<span class="meta">@OneToMany</span>(mappedBy = <span class="string">"team"</span>)</span><br><span class="line">    <span class="keyword">private</span> List&lt;Member&gt; members;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>다대일 양방향 연관관계는 다대일 단방향 연관관계에서 <code>@ManyToOne</code>을 적용한 반대쪽 엔티티에 <code>@OneToMany</code>를 적용하면 된다.</p>
+<p>이 때 <code>mappedaBy</code> 속성을 통해 연관관계의 주인을 지정한다. 위의 예제에서 연관관계의 주인은 Member 엔티티의 team 필드다.</p>
+<h2 id="일대다-연관관계"><a href="#일대다-연관관계" class="headerlink" title="일대다 연관관계"></a>일대다 연관관계</h2><p>일대다 단방향 관계에서 외래키는 항상 다쪽 테이블에 있기 때문에, 반대편 테이블의 외래키를 관리하는 형태다.</p>
+<h3 id="단방향-1"><a href="#단방향-1" class="headerlink" title="단방향"></a>단방향</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="meta">@Table</span>(name = <span class="string">"product_group"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ProductGroup</span> </span>&#123;</span><br><span class="line">		<span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@OneToMany</span></span><br><span class="line">    <span class="meta">@JoinColumn</span>(name = <span class="string">"product_group_id"</span>)</span><br><span class="line">    <span class="keyword">private</span> List&lt;Product&gt; products;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="meta">@Table</span>(name = <span class="string">"product"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Product</span> </span>&#123;</span><br><span class="line">		<span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>일대다 단방향 관계를 매핑할 때는 <code>@JoinColumn</code>을 명시해야 한다. 그렇지 않으면 <strong><em>JPA는 연결 테이블을 중간에 두고 연관관계를 관리하는 조인 테이블(Join Table) 전략을 기본으로 사용해서 매핑</em></strong>한다.</p>
+<p>일대다 단방향 매핑의 단점은 매핑한 객체가 관리하는 외래키가 다른 테이블에 있다는 것. 해당 테이블에 외래키가 있으면 엔티티의 저장과 연관관계 처리를 INSERT SQL 한 번으로 끝낼 수 있으나 다른 테이블에 외래키가 있으면 연관관계 처리를 위한 UPDATE SQL을 추가로 실행해야 한다.</p>
+<p>상황에 따라 다르겠지만 <strong>일반적으로 일대다 단방향 매핑보다는 다대일 양방향 매핑을 권장</strong>한다.</p>
+<h3 id="OneToMany"><a href="#OneToMany" class="headerlink" title="@OneToMany"></a>@OneToMany</h3><p>일대다 관계를 매핑할 때 사용한다.</p>
+<ul>
+<li><code>mappedBy</code> : 연관관계의 주인이 아닌 엔티티에서 사용하며 연관관계의 주인을 지정해야 한다.</li>
+<li><code>cascade</code> : 다른 관계 매핑 어노테이션의 cascade 속성과 동일하게 사용.</li>
+<li><code>fetch</code> : 다른 관계 매핑 어노테이션의 fetch 속성과 동일하게 사용.</li>
+<li><code>orphanRemoval</code> : 고아 객체 제거 기능을 설정한다. 기본값 false.</li>
+<li><code>targetEntity</code> : 다른 관계 매핑 어노테이션의 targetEntity 속성과 동일하게 사용.</li>
+</ul>
+<h3 id="양방향-1"><a href="#양방향-1" class="headerlink" title="양방향"></a>양방향</h3><p>일대다 양방향 매핑은 존재하지 않으며 대신 다대일 양방향 매핑을 사용해야 한다. 정확히는 양방향 매핑에서 <code>@OneToMany</code>는 연관관계의 주인이 될 수 없다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="meta">@Table</span>(name = <span class="string">"product"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Product</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@ManyToOne</span></span><br><span class="line">    <span class="meta">@JoinColumn</span>(name = <span class="string">"product_group_id"</span>, insertable = <span class="keyword">false</span>, updatable = <span class="keyword">false</span>)</span><br><span class="line">    <span class="keyword">private</span> ProductGroup productGroup;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>하지만 일대다 양방향 매핑이 완전히 불가능한 것은 아닌데, 위와 같이 반대편 엔티티에 같은 외래키를 사용하는 <strong>다대일 단방향 매핑을 읽기 전용으로 추가하는 방법</strong>이 있다.</p>
+<h2 id="일대일-연관관계"><a href="#일대일-연관관계" class="headerlink" title="일대일 연관관계"></a>일대일 연관관계</h2><p>일대일 관계는 어느 테이블이나 외래키를 가질 수 있다. <strong>일대일 관계는 주 테이블이나 대상 테이블 중 누가 외래키를 가질지 선택</strong>해야 한다. 아래 예제는 주 테이블에 외래 키를 가지는 예제다.</p>
+<h3 id="단방향-2"><a href="#단방향-2" class="headerlink" title="단방향"></a>단방향</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="meta">@Table</span>(name = <span class="string">"member"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Member</span> </span>&#123;</span><br><span class="line">		<span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@OneToOne</span></span><br><span class="line">    <span class="meta">@JoinColumn</span>(name = <span class="string">"member_detail_id"</span>)</span><br><span class="line">    <span class="keyword">private</span> MemberDetail memberDetail;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="meta">@Table</span>(name = <span class="string">"member_detail"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MemberDetail</span> </span>&#123;</span><br><span class="line">		<span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="OneToOne"><a href="#OneToOne" class="headerlink" title="@OneToOne"></a>@OneToOne</h3><p>일대일 관계를 매핑할 때 사용한다.</p>
+<ul>
+<li><code>mappedBy</code> : 다른 관계 매핑 어노테이션의 mappedBy 속성과 동일하게 사용.</li>
+<li><code>optional</code> : 다른 관계 매핑 어노테이션의 optional 속성과 동일하게 사용.</li>
+<li><code>cascade</code> : 다른 관계 매핑 어노테이션의 cascade 속성과 동일하게 사용.</li>
+<li><code>fetch</code> : 다른 관계 매핑 어노테이션의 fetch 속성과 동일하게 사용.</li>
+<li><code>orphanRemoval</code> : 다른 관계 매핑 어노테이션의 orphanRemoval 속성과 동일하게 사용.</li>
+<li><code>targetEntity</code> : 다른 관계 매핑 어노테이션의 targetEntity 속성과 동일하게 사용.</li>
+</ul>
+<h3 id="양방향-2"><a href="#양방향-2" class="headerlink" title="양방향"></a>양방향</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="meta">@Table</span>(name = <span class="string">"member_detail"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MemberDetail</span> </span>&#123;</span><br><span class="line">		<span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@OneToOne</span>(mappedBy = <span class="string">"memberDetail"</span>)</span><br><span class="line">    <span class="keyword">private</span> Member member;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>주 테이블이 외래키를 관리하므로 <code>mappedBy</code> 속성으로 연관관계의 주인을 설정해야 한다. 위의 예제에서 연관관계의 주인은 Member 엔티티의 memberDetail 필드다.</p>
+<h2 id="다대다-연관관계"><a href="#다대다-연관관계" class="headerlink" title="다대다 연관관계"></a>다대다 연관관계</h2><p>다대다 관계의 경우 테이블 연관관계로 표현할 때 중간 관계 테이블을 생성하여 일대다, 다대일 관계로 풀어낸다.</p>
+<h3 id="단방향-3"><a href="#단방향-3" class="headerlink" title="단방향"></a>단방향</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="meta">@Table</span>(name = <span class="string">"cart"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Cart</span> </span>&#123;</span><br><span class="line">		<span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@ManyToMany</span></span><br><span class="line">    <span class="meta">@JoinTable</span>(name = <span class="string">"cart_product"</span>,</span><br><span class="line">               joinColumns = <span class="meta">@JoinColumn</span>(name = <span class="string">"product_id"</span>),</span><br><span class="line">               inverseJoinColumns = <span class="meta">@JoinColumn</span>(name = <span class="string">"cart_id"</span>))</span><br><span class="line">    <span class="keyword">private</span> List&lt;Product&gt; products;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="ManyToMany"><a href="#ManyToMany" class="headerlink" title="@ManyToMany"></a>@ManyToMany</h3><p>다대다 관계를 매핑할 때 사용한다.</p>
+<ul>
+<li><code>mappedBy</code> : 다른 관계 매핑 어노테이션의 mappedBy 속성과 동일하게 사용.</li>
+<li><code>targetEntity</code> : 다른 관계 매핑 어노테이션의 targetEntity 속성과 동일하게 사용.</li>
+<li><code>cascade</code> : 다른 관계 매핑 어노테이션의 cascade 속성과 동일하게 사용.</li>
+<li><code>fetch</code> : 다른 관계 매핑 어노테이션의 fetch 속성과 동일하게 사용.</li>
+</ul>
+<h3 id="JoinTable"><a href="#JoinTable" class="headerlink" title="@JoinTable"></a>@JoinTable</h3><p>연결 테이블을 지정하는데 사용한다.</p>
+<ul>
+<li><code>name</code> : 연결 테이블명을 지정한다.</li>
+<li><code>joinColumns</code> : 현재 엔티티와 매핑할 조인 컬럼 정보를 지정한다.</li>
+<li><code>inverseJoinColumns</code> : 반대 엔티티와 매핑할 조인 컬럼 정보를 지정한다.</li>
+</ul>
+<h3 id="양방향-3"><a href="#양방향-3" class="headerlink" title="양방향"></a>양방향</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="meta">@Table</span>(name = <span class="string">"product"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Product</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@ManyToMany</span>(mappedBy = <span class="string">"products"</span>)</span><br><span class="line">    <span class="keyword">private</span> List&lt;Cart&gt; carts;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>역방향 엔티티에도 <code>@ManyToMany</code>를 사용하는데, 다대다 관계에서는 연관관계의 주인을 양쪽 중 원하는 곳에 지정하면 된다. 마찬가지로 <code>mappedBy</code> 속성으로 연관관계의 주인을 지정하는데, 위의 경우는 Cart 엔티티의 products 필드를 연관관계의 주인으로 지정한 것이다.</p>
+<h3 id="다대다-관계의-한계"><a href="#다대다-관계의-한계" class="headerlink" title="다대다 관계의 한계"></a>다대다 관계의 한계</h3><p><code>@ManyToMany</code>를 사용하여 연결 테이블을 자동으로 생성하면 여러 가지 편리한 점이 있으나 실무에서 사용하기에는 한계가 있다. <em>보통 연결 테이블에는 양쪽 테이블의 아이디만 담는 것이 아니라 부가적인 컬럼이 필요</em>한데 이 경우에는 <code>@ManyToMany</code>를 사용할 수 없다.</p>
+<p>따라서 이런 경우에는 연결 테이블과 별도로 매핑되는 연결 엔티티를 만들고 양쪽 테이블과의 관계는 일대다, 다대일 관계로 풀어야 한다.</p>
+<blockquote>
+<p>위 내용은 김영한님의 <code>자바 ORM 표준 JPA 프로그래밍</code>를 읽으며 개인적으로 요약 및 정리하는 내용이다.<br>자세한 내용이 알고 싶으면 김영한님의 <code>자바 ORM 표준 JPA 프로그래밍</code>을 직접 읽어보길 추천한다.</p>
+</blockquote>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/tags/">Tag</a></li>
+         
+          <li><a href="/categories/">Category</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#연관관계-매핑의-핵심-키워드"><span class="toc-number">1.</span> <span class="toc-text">연관관계 매핑의 핵심 키워드</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#객체-연관관계와-테이블-연관관계"><span class="toc-number">2.</span> <span class="toc-text">객체 연관관계와 테이블 연관관계</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#연관관계의-주인-외래키-관리자"><span class="toc-number">3.</span> <span class="toc-text">연관관계의 주인(외래키 관리자)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#다대일-연관관계"><span class="toc-number">4.</span> <span class="toc-text">다대일 연관관계</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#단방향"><span class="toc-number">4.1.</span> <span class="toc-text">단방향</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ManyToOne"><span class="toc-number">4.2.</span> <span class="toc-text">@ManyToOne</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JoinColumn"><span class="toc-number">4.3.</span> <span class="toc-text">@JoinColumn</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#양방향"><span class="toc-number">4.4.</span> <span class="toc-text">양방향</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#일대다-연관관계"><span class="toc-number">5.</span> <span class="toc-text">일대다 연관관계</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#단방향-1"><span class="toc-number">5.1.</span> <span class="toc-text">단방향</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#OneToMany"><span class="toc-number">5.2.</span> <span class="toc-text">@OneToMany</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#양방향-1"><span class="toc-number">5.3.</span> <span class="toc-text">양방향</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#일대일-연관관계"><span class="toc-number">6.</span> <span class="toc-text">일대일 연관관계</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#단방향-2"><span class="toc-number">6.1.</span> <span class="toc-text">단방향</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#OneToOne"><span class="toc-number">6.2.</span> <span class="toc-text">@OneToOne</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#양방향-2"><span class="toc-number">6.3.</span> <span class="toc-text">양방향</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#다대다-연관관계"><span class="toc-number">7.</span> <span class="toc-text">다대다 연관관계</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#단방향-3"><span class="toc-number">7.1.</span> <span class="toc-text">단방향</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ManyToMany"><span class="toc-number">7.2.</span> <span class="toc-text">@ManyToMany</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JoinTable"><span class="toc-number">7.3.</span> <span class="toc-text">@JoinTable</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#양방향-3"><span class="toc-number">7.4.</span> <span class="toc-text">양방향</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#다대다-관계의-한계"><span class="toc-number">7.5.</span> <span class="toc-text">다대다 관계의 한계</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://jheloper.github.io/2019/09/jpa-04-relation-basic/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://jheloper.github.io/2019/09/jpa-04-relation-basic/&text=JPA(Java Persistence API) 04 - 연관관계(기본)"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://jheloper.github.io/2019/09/jpa-04-relation-basic/&title=JPA(Java Persistence API) 04 - 연관관계(기본)"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://jheloper.github.io/2019/09/jpa-04-relation-basic/&is_video=false&description=JPA(Java Persistence API) 04 - 연관관계(기본)"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=JPA(Java Persistence API) 04 - 연관관계(기본)&body=Check out this article: https://jheloper.github.io/2019/09/jpa-04-relation-basic/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://jheloper.github.io/2019/09/jpa-04-relation-basic/&title=JPA(Java Persistence API) 04 - 연관관계(기본)"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://jheloper.github.io/2019/09/jpa-04-relation-basic/&title=JPA(Java Persistence API) 04 - 연관관계(기본)"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://jheloper.github.io/2019/09/jpa-04-relation-basic/&title=JPA(Java Persistence API) 04 - 연관관계(기본)"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://jheloper.github.io/2019/09/jpa-04-relation-basic/&title=JPA(Java Persistence API) 04 - 연관관계(기본)"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://jheloper.github.io/2019/09/jpa-04-relation-basic/&name=JPA(Java Persistence API) 04 - 연관관계(기본)&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://jheloper.github.io/2019/09/jpa-04-relation-basic/&t=JPA(Java Persistence API) 04 - 연관관계(기본)"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020
+    Jheloper
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/tags/">Tag</a></li>
+         
+          <li><a href="/categories/">Category</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-107872316-2', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'jheloper';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+
+</body>
+</html>

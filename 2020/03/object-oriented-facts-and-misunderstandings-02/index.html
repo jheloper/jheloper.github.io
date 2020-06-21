@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="아래 내용은 조영호님의 “객체지향의 사실과 오해” 2장(이상한 나라의 객체)를 읽고 개인적으로 정리한 내용들입니다. 핵심 요약 객체는 상태, 행동, 식별자를 가진다. 객체의 상태는 특정 시점에 객체가 가지고 있는 정보의 집합. 객체의 행동은 외부의 요청 또는 수신된 메시지에 응답하기 위해 동작하고 반응하는 활동. 객체의 식별자는 어떤 객체를 다른 객체와">
+<meta name="keywords" content="OOP,객체지향,Book">
+<meta property="og:type" content="article">
+<meta property="og:title" content="객체지향의 사실과 오해(2장) 정리">
+<meta property="og:url" content="https://jheloper.github.io/2020/03/object-oriented-facts-and-misunderstandings-02/index.html">
+<meta property="og:site_name" content="Jheloper&#39;s Dev Log">
+<meta property="og:description" content="아래 내용은 조영호님의 “객체지향의 사실과 오해” 2장(이상한 나라의 객체)를 읽고 개인적으로 정리한 내용들입니다. 핵심 요약 객체는 상태, 행동, 식별자를 가진다. 객체의 상태는 특정 시점에 객체가 가지고 있는 정보의 집합. 객체의 행동은 외부의 요청 또는 수신된 메시지에 응답하기 위해 동작하고 반응하는 활동. 객체의 식별자는 어떤 객체를 다른 객체와">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://jheloper.github.io/images/objected-oriented-facts-and-misunderstandings.jpg">
+<meta property="og:updated_time" content="2020-06-21T20:09:35.863Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="객체지향의 사실과 오해(2장) 정리">
+<meta name="twitter:description" content="아래 내용은 조영호님의 “객체지향의 사실과 오해” 2장(이상한 나라의 객체)를 읽고 개인적으로 정리한 내용들입니다. 핵심 요약 객체는 상태, 행동, 식별자를 가진다. 객체의 상태는 특정 시점에 객체가 가지고 있는 정보의 집합. 객체의 행동은 외부의 요청 또는 수신된 메시지에 응답하기 위해 동작하고 반응하는 활동. 객체의 식별자는 어떤 객체를 다른 객체와">
+<meta name="twitter:image" content="https://jheloper.github.io/images/objected-oriented-facts-and-misunderstandings.jpg">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/p_favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/p_favicon.ico" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/p_favicon.ico">
+          
+        
+    
+    <!-- title -->
+    <title>객체지향의 사실과 오해(2장) 정리</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/tags/">Tag</a></li>
+         
+          <li><a href="/categories/">Category</a></li>
+        
+      </ul>
+    </span>
+    <br>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2020/06/object-oriented-facts-and-misunderstandings-03/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2020/02/object-oriented-facts-and-misunderstandings-01/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://jheloper.github.io/2020/03/object-oriented-facts-and-misunderstandings-02/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://jheloper.github.io/2020/03/object-oriented-facts-and-misunderstandings-02/&text=객체지향의 사실과 오해(2장) 정리"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://jheloper.github.io/2020/03/object-oriented-facts-and-misunderstandings-02/&title=객체지향의 사실과 오해(2장) 정리"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://jheloper.github.io/2020/03/object-oriented-facts-and-misunderstandings-02/&is_video=false&description=객체지향의 사실과 오해(2장) 정리"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=객체지향의 사실과 오해(2장) 정리&body=Check out this article: https://jheloper.github.io/2020/03/object-oriented-facts-and-misunderstandings-02/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://jheloper.github.io/2020/03/object-oriented-facts-and-misunderstandings-02/&title=객체지향의 사실과 오해(2장) 정리"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://jheloper.github.io/2020/03/object-oriented-facts-and-misunderstandings-02/&title=객체지향의 사실과 오해(2장) 정리"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://jheloper.github.io/2020/03/object-oriented-facts-and-misunderstandings-02/&title=객체지향의 사실과 오해(2장) 정리"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://jheloper.github.io/2020/03/object-oriented-facts-and-misunderstandings-02/&title=객체지향의 사실과 오해(2장) 정리"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://jheloper.github.io/2020/03/object-oriented-facts-and-misunderstandings-02/&name=객체지향의 사실과 오해(2장) 정리&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://jheloper.github.io/2020/03/object-oriented-facts-and-misunderstandings-02/&t=객체지향의 사실과 오해(2장) 정리"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#핵심-요약"><span class="toc-number">1.</span> <span class="toc-text">핵심 요약</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#객체지향과-인지-능력"><span class="toc-number">2.</span> <span class="toc-text">객체지향과 인지 능력</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#객체-그리고-소프트웨어-나라"><span class="toc-number">3.</span> <span class="toc-text">객체, 그리고 소프트웨어 나라</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#상태"><span class="toc-number">4.</span> <span class="toc-text">상태</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#행동"><span class="toc-number">5.</span> <span class="toc-text">행동</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#식별자"><span class="toc-number">6.</span> <span class="toc-text">식별자</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#객체의-특성"><span class="toc-number">7.</span> <span class="toc-text">객체의 특성</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#버트란드-마이어의-기계로서의-객체-비유"><span class="toc-number">8.</span> <span class="toc-text">버트란드 마이어의 기계로서의 객체 비유</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#행동이-상태를-결정한다"><span class="toc-number">9.</span> <span class="toc-text">행동이 상태를 결정한다</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#은유와-객체"><span class="toc-number">10.</span> <span class="toc-text">은유와 객체</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        객체지향의 사실과 오해(2장) 정리
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Jheloper's Dev Log</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-03-30T14:30:00.000Z" itemprop="datePublished">2020-03-30</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Book/">Book</a>, <a class="tag-link" href="/tags/OOP/">OOP</a>, <a class="tag-link" href="/tags/객체지향/">객체지향</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p><img src="/images/objected-oriented-facts-and-misunderstandings.jpg" alt></p>
+<p>아래 내용은 조영호님의 “객체지향의 사실과 오해” 2장(이상한 나라의 객체)를 읽고 개인적으로 정리한 내용들입니다.</p>
+<h2 id="핵심-요약"><a href="#핵심-요약" class="headerlink" title="핵심 요약"></a>핵심 요약</h2><ul>
+<li>객체는 상태, 행동, 식별자를 가진다.</li>
+<li>객체의 상태는 특정 시점에 객체가 가지고 있는 정보의 집합.</li>
+<li>객체의 행동은 외부의 요청 또는 수신된 메시지에 응답하기 위해 동작하고 반응하는 활동.</li>
+<li>객체의 식별자는 어떤 객체를 다른 객체와 구분하는 데 사용하는 객체의 프로퍼티.</li>
+<li>객체의 상태를 먼저 결정하고 행동을 나중에 결정하는 것보다는, 객체의 행동을 먼저 결정하고 상태를 나중에 결정하는 방법을 선택할 것.</li>
+<li>객체지향 세계는 현실 세계의 모방이나 추상화보다는, 현실 세계의 은유에 가깝다.</li>
+</ul>
+<h2 id="객체지향과-인지-능력"><a href="#객체지향과-인지-능력" class="headerlink" title="객체지향과 인지 능력"></a>객체지향과 인지 능력</h2><p>많은 사람들이 객체지향을 직관적이고 이해하기 쉬운 패러다임이라고 말하는 이유? ⇒ 객체지향이 <strong><em>세상을 자율적이고 독립적인 객체들로 분해할 수 있는 인간의 기본적인 인지 능력</em></strong>에 기반을 두고 있기 때문.</p>
+<p>그러나 현실 세계와 소프트웨어 세계 사이의 유사성은 여기까지, 왜? ⇒ 객체지향 패러다임의 목적은 <strong><em>현실 세계를 모방하는 것이 아니라 현실 세계를 기반으로 새로운 세계를 창조하는 것</em></strong>이기 때문에 소프트웨어 세계에서 살아가는 객체는 현실 세계에 존재하는 객체와는 전혀 다른 모습을 보이는 것이 일반적.</p>
+<h2 id="객체-그리고-소프트웨어-나라"><a href="#객체-그리고-소프트웨어-나라" class="headerlink" title="객체, 그리고 소프트웨어 나라"></a>객체, 그리고 소프트웨어 나라</h2><p>객체의 다양한 특성을 효과적으로 설명하기 위해서는 <strong><em>객체를 상태, 행동, 식별자를 지닌 실체로 보는 것이 가장 효과적</em></strong>이다.</p>
+<p>객체에 대한 정의? ⇒ 객체란 식별 가능한 개체 또는 사물. 객체는 <strong><em>자동차처럼 만질 수 있는 구체적인 사물</em></strong>일 수도 있고, <strong><em>시간처럼 추상적인 개념</em></strong>일 수도 있다. 객체는 <strong><em>구별 가능한 식별자, 특징적인 행동, 변경 가능한 상태</em></strong>를 가진다. 소프트웨어 안에서 객체는 저장된 상태와 실행 가능한 코드를 통해 구현된다.</p>
+<h2 id="상태"><a href="#상태" class="headerlink" title="상태"></a>상태</h2><p>과거에 발생한 행동의 이력을 통해 현재 발생한 행동의 결과를 판단하는 방식 ⇒ 일반적으로 복잡하고 번거로우며 이해하기 어렵다.</p>
+<p>인간은 행동의 과정과 결과를 단순하게 기술하기 위해 <strong><em>상태</em></strong>라는 개념을 고안했는데, 상태를 이용하면 과거의 모든 행동 이력을 설명하지 않고도 행동의 결과를 쉽게 예측하고 설명할 수 있다.</p>
+<p>숫자, 문자열, 양, 속도, 시간, 날짜, 참/거짓과 같은 단순한 값들은 객체가 아니다. 단순한 값들은 그 자체로 독립적인 의미를 가지기보다는 다른 객체의 상태를 표현하기 위해 사용된다. 이러한 단순한 값은 객체의 상태를 표현하기 위한 중요한 수단이다.</p>
+<p>프로퍼티(property) ⇒ 모든 객체의 상태는 <strong><em>단순한 값과 객체의 조합으로 표현</em></strong>할 수 있는데 이때 <strong><em>객체의 상태를 구성하는 모든 특징을 통틀어 객체의 프로퍼티</em></strong>라고 한다.</p>
+<p>속성과 링크</p>
+<ul>
+<li>속성(attribute) ⇒ 객체의 프로퍼티 중 단순한 값.</li>
+<li>링크(link) ⇒ 객체의 프로퍼티 중 다른 객체를 참조하는 값.</li>
+</ul>
+<p>객체의 상태란? ⇒ <strong><em>특정 시점에 객체가 가지고 있는 정보의 집합</em></strong>으로 객체의 구조적 특징을 표현한다. 객체의 상태는 객체에 존재하는 정적인 프로퍼티와 동적인 프로퍼티 값으로 구성된다.</p>
+<h2 id="행동"><a href="#행동" class="headerlink" title="행동"></a>행동</h2><p>객체가 취하는 행동은 객체 자신의 상태를 변경시킨다. <strong><em>객체의 행동에 의해 객체의 상태가 변경된다는 것은 행동이 부수 효과(side effect)를 초래</em></strong>한다는 것을 의미한다.</p>
+<p>상태와 행동 사이의 관계</p>
+<ul>
+<li>객체의 행동은 상태에 영향을 받는다.</li>
+<li>객체의 행동은 상태를 변경시킨다.</li>
+</ul>
+<p>행동을 서술하는 두 가지 관점</p>
+<ul>
+<li>상호작용이 현재의 상태에 어떤 방식으로 의존하는가.</li>
+<li>상호작용이 어떻게 현재의 상태를 변경시키는가.</li>
+</ul>
+<p>객체의 행동으로 인해 발생하는 결과를 설명하는 두 가지 관점</p>
+<ul>
+<li>객체 자신의 상태 변경.</li>
+<li>행동 내에서 협력하는 다른 객체에 대한 메시지 전송.</li>
+</ul>
+<p>객체가 다른 객체와 메시지를 통해서만 의사소통할 수 있다는 것을 기억할 것. 객체가 어떤 행동을 하도록 만드는 것은 객체가 외부로부터 수신한 메시지다.</p>
+<p>객체의 행동이란? ⇒ <strong><em>외부의 요청 또는 수신된 메시지에 응답하기 위해 동작하고 반응하는 활동</em></strong>이다. 행동의 결과로 객체는 자신의 상태를 변경하거나 다른 객체에게 메시지를 전달할 수 있다. 객체는 행동을 통해 다른 객체와의 협력에 참여하므로 행동은 외부에 가시적이어야 한다.</p>
+<p>상태 캡슐화 ⇒ 객체는 상태를 감춰둔 채 외부로 노출하지 않는다. 객체가 <strong><em>외부에 노출하는 것은 행동</em></strong>뿐이며, 외부에서 객체에 접근할 수 있는 유일한 방법 역시 행동뿐이다.</p>
+<p>상태를 캡슐화해야 하는 이유? ⇒ 상태를 잘 정의된 행동 집합 뒤로 캡슐화하는 것은 객체의 자율성을 높이고 협력을 단순하고 유연하게 만들기 때문!</p>
+<h2 id="식별자"><a href="#식별자" class="headerlink" title="식별자"></a>식별자</h2><p>값(value)과 객체의 가장 큰 차이점 ⇒ 값은 식별자를 가지지 않지만 객체는 식별자를 가진다는 점!</p>
+<p>값의 상태는 변하지 않기 때문에 <strong><em>불변 상태(immutable state)</em></strong>를 가진다고 말한다. 값의 경우 두 인스턴스의 상태가 같다면 두 인스턴스를 같은 것으로 판단한다.</p>
+<p>객체는 시간에 따라 변경되는 상태를 포함하며 행동을 통해 상태를 변경한다. 따라서 객체는 <strong><em>가변 상태(mutable state)</em></strong>를 가진다고 말한다.</p>
+<p>동등성과 동일성</p>
+<ul>
+<li>동등성(equality) ⇒ 상태를 이용해 두 값이 같은지 판단할 수 있는 성질.</li>
+<li>동일성(identical) ⇒ 식별자를 기반으로 객체가 같은지를 판단할 수 있는 성질.</li>
+</ul>
+<p>객체의 식별자란? ⇒ <strong><em>어떤 객체를 다른 객체와 구분하는 데 사용하는 객체의 프로퍼티</em></strong>다. 값은 식별자를 가지지 않기 때문에 상태를 이용한 동등성 검사를 통해 두 인스턴스를 비교해야 한다. 객체는 상태가 변경될 수 있기 때문에 식별자를 이용한 동일성 검사를 통해 두 인스턴스를 비교할 수 있다.</p>
+<h2 id="객체의-특성"><a href="#객체의-특성" class="headerlink" title="객체의 특성"></a>객체의 특성</h2><ul>
+<li>객체는 상태를 가지며 상태는 변경 가능하다.</li>
+<li>객체의 상태를 변경시키는 것은 객체의 행동이다.<ul>
+<li>행동의 결과는 상태에 의존적이며 상태를 이용해 서술할 수 있다.</li>
+<li>행동의 순서가 실행 결과에 영향을 미친다.</li>
+</ul>
+</li>
+<li>객체는 어떤 상태에 있더라도 유일하게 식별 가능하다.</li>
+</ul>
+<h2 id="버트란드-마이어의-기계로서의-객체-비유"><a href="#버트란드-마이어의-기계로서의-객체-비유" class="headerlink" title="버트란드 마이어의 기계로서의 객체 비유"></a>버트란드 마이어의 기계로서의 객체 비유</h2><p>쿼리와 명령</p>
+<ul>
+<li>쿼리(query) ⇒ 일반적으로 객체의 상태를 조회하는 작업.</li>
+<li>명령(command) ⇒ 객체의 상태를 변경하는 작업.</li>
+</ul>
+<p>객체가 외부에 제공하는 행동의 대부분은 쿼리와 명령으로 구성된다.</p>
+<p>버트란드 마이어가 제시한 기계(=객체)의 사용자는 명령 버튼을 누르거나 조회 버튼을 눌러서 사용한다. 어떤 사용자도 직접 기계를 열어 기계 내부의 상태에 직접 접근하려고 하지 않는다.</p>
+<h2 id="행동이-상태를-결정한다"><a href="#행동이-상태를-결정한다" class="headerlink" title="행동이 상태를 결정한다"></a>행동이 상태를 결정한다</h2><p>상태를 먼저 결정하고 행동을 나중에 결정하는 방법은 설계에 있어서 아래와 같은 나쁜 영향을 끼친다.</p>
+<ol>
+<li>상태를 먼저 결정할 경우 캡슐화가 저해된다.</li>
+<li>객체를 협력자가 아닌 고립된 섬으로 만든다.</li>
+<li>객체의 재사용성이 저하된다.</li>
+</ol>
+<p>객체는 다른 객체와 협력하기 위해 존재한다. 객체의 행동은 객체가 협력에 참여하는 유일한 방법이다. 따라서 <strong><em>객체가 적합한지를 결정하는 것은 그 객체의 상태가 아니라 행동</em></strong>이다.</p>
+<p><strong><em>어떤 책임이 필요한가를 결정하는 과정이 전체 설계를 주도해야 한다.</em></strong> 책임 주도 설계는 협력이라는 문맥 안에서 객체의 행동을 생각하도록 도움으로써 응집도 높고 재사용 가능한 객체를 만들 수 있게 한다.</p>
+<h2 id="은유와-객체"><a href="#은유와-객체" class="headerlink" title="은유와 객체"></a>은유와 객체</h2><p>많은 사람들이 객체지향을 현실 세계의 모방 또는 추상화라고 생각 ⇒ 그러나 객체지향 세계는 현실 세계의 단순한 모방이 아닌 전혀 다른 세계.</p>
+<p>현실 속의 객체와 소프트웨어 객체 사이의 가장 큰 차이점? ⇒ 현실 속에서는 수동적인 존재일지라도 소프트웨어 객체로 구현될 때는 능동적으로 변한다는 것.</p>
+<p>객체지향 세계와 현실 세계는 전혀 상관이 없는 것? ⇒ 상관이 없지는 않지만 모방이나 추상화보다 현실 세계와 객체지향 세계 사이의 관계를 좀 더 정확하게 설명할 수 있는 단어는 <strong><em>은유(metaphor)</em></strong>.</p>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/tags/">Tag</a></li>
+         
+          <li><a href="/categories/">Category</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#핵심-요약"><span class="toc-number">1.</span> <span class="toc-text">핵심 요약</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#객체지향과-인지-능력"><span class="toc-number">2.</span> <span class="toc-text">객체지향과 인지 능력</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#객체-그리고-소프트웨어-나라"><span class="toc-number">3.</span> <span class="toc-text">객체, 그리고 소프트웨어 나라</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#상태"><span class="toc-number">4.</span> <span class="toc-text">상태</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#행동"><span class="toc-number">5.</span> <span class="toc-text">행동</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#식별자"><span class="toc-number">6.</span> <span class="toc-text">식별자</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#객체의-특성"><span class="toc-number">7.</span> <span class="toc-text">객체의 특성</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#버트란드-마이어의-기계로서의-객체-비유"><span class="toc-number">8.</span> <span class="toc-text">버트란드 마이어의 기계로서의 객체 비유</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#행동이-상태를-결정한다"><span class="toc-number">9.</span> <span class="toc-text">행동이 상태를 결정한다</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#은유와-객체"><span class="toc-number">10.</span> <span class="toc-text">은유와 객체</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://jheloper.github.io/2020/03/object-oriented-facts-and-misunderstandings-02/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://jheloper.github.io/2020/03/object-oriented-facts-and-misunderstandings-02/&text=객체지향의 사실과 오해(2장) 정리"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://jheloper.github.io/2020/03/object-oriented-facts-and-misunderstandings-02/&title=객체지향의 사실과 오해(2장) 정리"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://jheloper.github.io/2020/03/object-oriented-facts-and-misunderstandings-02/&is_video=false&description=객체지향의 사실과 오해(2장) 정리"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=객체지향의 사실과 오해(2장) 정리&body=Check out this article: https://jheloper.github.io/2020/03/object-oriented-facts-and-misunderstandings-02/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://jheloper.github.io/2020/03/object-oriented-facts-and-misunderstandings-02/&title=객체지향의 사실과 오해(2장) 정리"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://jheloper.github.io/2020/03/object-oriented-facts-and-misunderstandings-02/&title=객체지향의 사실과 오해(2장) 정리"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://jheloper.github.io/2020/03/object-oriented-facts-and-misunderstandings-02/&title=객체지향의 사실과 오해(2장) 정리"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://jheloper.github.io/2020/03/object-oriented-facts-and-misunderstandings-02/&title=객체지향의 사실과 오해(2장) 정리"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://jheloper.github.io/2020/03/object-oriented-facts-and-misunderstandings-02/&name=객체지향의 사실과 오해(2장) 정리&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://jheloper.github.io/2020/03/object-oriented-facts-and-misunderstandings-02/&t=객체지향의 사실과 오해(2장) 정리"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020
+    Jheloper
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/tags/">Tag</a></li>
+         
+          <li><a href="/categories/">Category</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-107872316-2', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'jheloper';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+
+</body>
+</html>

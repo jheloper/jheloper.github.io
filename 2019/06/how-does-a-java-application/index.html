@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="자바 애플리케이션을 구현하는 입장에서 자바 애플리케이션은 어떻게 실행되는 것일까 궁금하여 파악한 바를 간략하게 정리하고자 한다. 자바 프로그래밍 언어로 소스 코드(.java)를 작성한다가장 처음에 우리는 프로그래밍 언어인 자바로 소스 코드를 작성하는데, 이렇게 작성한 소스 코드 파일들은 .java라는 확장자가 붙은 파일들이다. 소스 코드를 컴파일하여 바이">
+<meta name="keywords" content="Java,JVM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="자바 애플리케이션은 어떻게 실행되는걸까?">
+<meta property="og:url" content="https://jheloper.github.io/2019/06/how-does-a-java-application/index.html">
+<meta property="og:site_name" content="Jheloper&#39;s Dev Log">
+<meta property="og:description" content="자바 애플리케이션을 구현하는 입장에서 자바 애플리케이션은 어떻게 실행되는 것일까 궁금하여 파악한 바를 간략하게 정리하고자 한다. 자바 프로그래밍 언어로 소스 코드(.java)를 작성한다가장 처음에 우리는 프로그래밍 언어인 자바로 소스 코드를 작성하는데, 이렇게 작성한 소스 코드 파일들은 .java라는 확장자가 붙은 파일들이다. 소스 코드를 컴파일하여 바이">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://jheloper.github.io/images/java-logo.jpg">
+<meta property="og:updated_time" content="2020-06-21T20:09:35.863Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="자바 애플리케이션은 어떻게 실행되는걸까?">
+<meta name="twitter:description" content="자바 애플리케이션을 구현하는 입장에서 자바 애플리케이션은 어떻게 실행되는 것일까 궁금하여 파악한 바를 간략하게 정리하고자 한다. 자바 프로그래밍 언어로 소스 코드(.java)를 작성한다가장 처음에 우리는 프로그래밍 언어인 자바로 소스 코드를 작성하는데, 이렇게 작성한 소스 코드 파일들은 .java라는 확장자가 붙은 파일들이다. 소스 코드를 컴파일하여 바이">
+<meta name="twitter:image" content="https://jheloper.github.io/images/java-logo.jpg">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/p_favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/p_favicon.ico" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/p_favicon.ico">
+          
+        
+    
+    <!-- title -->
+    <title>자바 애플리케이션은 어떻게 실행되는걸까?</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/tags/">Tag</a></li>
+         
+          <li><a href="/categories/">Category</a></li>
+        
+      </ul>
+    </span>
+    <br>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/06/write-early-return-code/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/05/spring-boot-pid-file/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://jheloper.github.io/2019/06/how-does-a-java-application/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://jheloper.github.io/2019/06/how-does-a-java-application/&text=자바 애플리케이션은 어떻게 실행되는걸까?"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://jheloper.github.io/2019/06/how-does-a-java-application/&title=자바 애플리케이션은 어떻게 실행되는걸까?"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://jheloper.github.io/2019/06/how-does-a-java-application/&is_video=false&description=자바 애플리케이션은 어떻게 실행되는걸까?"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=자바 애플리케이션은 어떻게 실행되는걸까?&body=Check out this article: https://jheloper.github.io/2019/06/how-does-a-java-application/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://jheloper.github.io/2019/06/how-does-a-java-application/&title=자바 애플리케이션은 어떻게 실행되는걸까?"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://jheloper.github.io/2019/06/how-does-a-java-application/&title=자바 애플리케이션은 어떻게 실행되는걸까?"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://jheloper.github.io/2019/06/how-does-a-java-application/&title=자바 애플리케이션은 어떻게 실행되는걸까?"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://jheloper.github.io/2019/06/how-does-a-java-application/&title=자바 애플리케이션은 어떻게 실행되는걸까?"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://jheloper.github.io/2019/06/how-does-a-java-application/&name=자바 애플리케이션은 어떻게 실행되는걸까?&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://jheloper.github.io/2019/06/how-does-a-java-application/&t=자바 애플리케이션은 어떻게 실행되는걸까?"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#자바-프로그래밍-언어로-소스-코드-java-를-작성한다"><span class="toc-number">1.</span> <span class="toc-text">자바 프로그래밍 언어로 소스 코드(.java)를 작성한다</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#소스-코드를-컴파일하여-바이트-코드-class-를-생성한다"><span class="toc-number">2.</span> <span class="toc-text">소스 코드를 컴파일하여 바이트 코드(.class)를 생성한다</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#자바-가상-머신-JVM-Java-Virtual-Machine-으로-자바-애플리케이션-프로세스를-생성한다"><span class="toc-number">3.</span> <span class="toc-text">자바 가상 머신(JVM, Java Virtual Machine)으로 자바 애플리케이션 프로세스를 생성한다</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#클래스-로더"><span class="toc-number">3.1.</span> <span class="toc-text">클래스 로더</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#런타임-데이터-영역"><span class="toc-number">3.2.</span> <span class="toc-text">런타임 데이터 영역</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#실행-엔진"><span class="toc-number">3.3.</span> <span class="toc-text">실행 엔진</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        자바 애플리케이션은 어떻게 실행되는걸까?
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Jheloper's Dev Log</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-06-15T06:50:00.000Z" itemprop="datePublished">2019-06-15</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/JVM/">JVM</a>, <a class="tag-link" href="/tags/Java/">Java</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p><img src="/images/java-logo.jpg" alt></p>
+<p>자바 애플리케이션을 구현하는 입장에서 자바 애플리케이션은 어떻게 실행되는 것일까 궁금하여 파악한 바를 간략하게 정리하고자 한다.</p>
+<h2 id="자바-프로그래밍-언어로-소스-코드-java-를-작성한다"><a href="#자바-프로그래밍-언어로-소스-코드-java-를-작성한다" class="headerlink" title="자바 프로그래밍 언어로 소스 코드(.java)를 작성한다"></a>자바 프로그래밍 언어로 소스 코드(.java)를 작성한다</h2><p>가장 처음에 우리는 프로그래밍 언어인 자바로 소스 코드를 작성하는데, 이렇게 작성한 소스 코드 파일들은 <code>.java</code>라는 확장자가 붙은 파일들이다.</p>
+<h2 id="소스-코드를-컴파일하여-바이트-코드-class-를-생성한다"><a href="#소스-코드를-컴파일하여-바이트-코드-class-를-생성한다" class="headerlink" title="소스 코드를 컴파일하여 바이트 코드(.class)를 생성한다"></a>소스 코드를 컴파일하여 바이트 코드(.class)를 생성한다</h2><p>우리가 작성한 소스 코드를 자바 컴파일러가 자바 가상 머신이 해석 가능한 바이트 코드로 컴파일하는데, 이렇게 컴파일된 바이트 코드 파일들은 <code>.class</code> 확장자가 붙은 파일들이다.</p>
+<h2 id="자바-가상-머신-JVM-Java-Virtual-Machine-으로-자바-애플리케이션-프로세스를-생성한다"><a href="#자바-가상-머신-JVM-Java-Virtual-Machine-으로-자바-애플리케이션-프로세스를-생성한다" class="headerlink" title="자바 가상 머신(JVM, Java Virtual Machine)으로 자바 애플리케이션 프로세스를 생성한다"></a>자바 가상 머신(JVM, Java Virtual Machine)으로 자바 애플리케이션 프로세스를 생성한다</h2><p>자바 가상 머신(이하 JVM)을 통해 자바 애플리케이션을 실행하면 프로세스가 하나 생성되며, 동시에 운영체제로부터 메모리 영역을 할당 받는다.</p>
+<p>JVM의 클래스 로더가 프로그램에 의해 호출되는 바이트 코드를 메모리에 적재하고 링크하며 초기화하고, 이 과정에서 운영체제로부터 할당받은 런타임 데이터 영역에 알맞게 데이터가 저장된다. 그리고 실행 엔진이 메모리에 적재된 바이트 코드를 읽고 해석하여 실행하면서 애플리케이션이 수행된다.</p>
+<h3 id="클래스-로더"><a href="#클래스-로더" class="headerlink" title="클래스 로더"></a>클래스 로더</h3><p>바이트 코드인 클래스 파일을 읽어서 메모리에 적재하고, 링크하고, 초기화하는 역할을 한다. 이러한 클래스로더는 세부적으로 아래와 같이 분류할 수 있다.</p>
+<ul>
+<li>부트스트랩 클래스 로더 : 부트스트랩 클래스패스로부터 클래스들을 적재한다. 최상위 클래스 로더.</li>
+<li>확장 클래스 로더 : 확장 경로(<code>jre/lib/ext</code> 폴더나 <code>java.ext.dirs</code> 환경변수에 지정된 경로)로부터 클래스들을 적재한다.</li>
+<li>애플리케이션 클래스 로더 : 애플리케이션 레벨 클래스패스, 또는 기타 환경변수 경로로부터 클래스들을 적재한다.</li>
+</ul>
+<h3 id="런타임-데이터-영역"><a href="#런타임-데이터-영역" class="headerlink" title="런타임 데이터 영역"></a>런타임 데이터 영역</h3><p>자바 애플리케이션 프로세스가 운영체제에게 할당받은 런타임 메모리 영역. 아래와 같이 분류할 수 있다.</p>
+<ul>
+<li>매서드 영역 : 클래스 레벨 데이터(static 영역 포함)를 저장하는 영역. 프로세스마다 1개씩 존재. 공유 리소스이며 스레드 세이프하지 않다.</li>
+<li>힙 영역 : 모든 객체와 배열이 저장되는 영역. 프로세스마다 1개씩 존재. 공유 리소스이며 스레드 세이프하지 않다.</li>
+<li>스택 영역 : 각 스레드마다 가지는 영역, 메서드 호출에 대한 스택 프레임과 로컬 변수가 저장된다. 공유 불가능한 리소스이며 스레드 세이프하다.</li>
+<li>PC 레지스터 : 각 스레드는 별도의 PC 레지스터를 가지며, 명령 실행 시 현재 실행중인 명령 주소를 저장한다.</li>
+<li>네이티브 메서드 스택 : 네이티브 메서드 정보를 가지는 곳. 모든 스레드에 대해 별도의 네이티브 메서드 스택이 만들어진다.</li>
+</ul>
+<h3 id="실행-엔진"><a href="#실행-엔진" class="headerlink" title="실행 엔진"></a>실행 엔진</h3><p>바이트 코드를 읽고 해석하여 실행하는 역할을 한다. 아래는 실행 엔진에 포함된 컴포넌트들이다.</p>
+<ul>
+<li>인터프리터 : 바이트 코드를 하나씩 읽고 해석하여 실행하는 역할. 단점으로는 동일한 바이트 코드가 여러 번 호출되더라도 매번 새로운 해석이 발생한다는 것.</li>
+<li>JIT(Just In Time) 컴파일러 : 인터프리터의 단점을 해소하기 위해 반복되는 코드를 발견하면 해당 바이트 코드를 컴파일하여 네이티브 코드로 변경하고 이를 반복적인 호출에 사용하여 시스템 성능을 향상시킨다.</li>
+<li>가비지 컬렉터 : 더 이상 참조하지 않는 객체를 수집하고 힙 영역에서 제거하는 역할. 이런 과정은 JVM이 자동으로 수행한다.</li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/tags/">Tag</a></li>
+         
+          <li><a href="/categories/">Category</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#자바-프로그래밍-언어로-소스-코드-java-를-작성한다"><span class="toc-number">1.</span> <span class="toc-text">자바 프로그래밍 언어로 소스 코드(.java)를 작성한다</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#소스-코드를-컴파일하여-바이트-코드-class-를-생성한다"><span class="toc-number">2.</span> <span class="toc-text">소스 코드를 컴파일하여 바이트 코드(.class)를 생성한다</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#자바-가상-머신-JVM-Java-Virtual-Machine-으로-자바-애플리케이션-프로세스를-생성한다"><span class="toc-number">3.</span> <span class="toc-text">자바 가상 머신(JVM, Java Virtual Machine)으로 자바 애플리케이션 프로세스를 생성한다</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#클래스-로더"><span class="toc-number">3.1.</span> <span class="toc-text">클래스 로더</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#런타임-데이터-영역"><span class="toc-number">3.2.</span> <span class="toc-text">런타임 데이터 영역</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#실행-엔진"><span class="toc-number">3.3.</span> <span class="toc-text">실행 엔진</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://jheloper.github.io/2019/06/how-does-a-java-application/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://jheloper.github.io/2019/06/how-does-a-java-application/&text=자바 애플리케이션은 어떻게 실행되는걸까?"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://jheloper.github.io/2019/06/how-does-a-java-application/&title=자바 애플리케이션은 어떻게 실행되는걸까?"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://jheloper.github.io/2019/06/how-does-a-java-application/&is_video=false&description=자바 애플리케이션은 어떻게 실행되는걸까?"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=자바 애플리케이션은 어떻게 실행되는걸까?&body=Check out this article: https://jheloper.github.io/2019/06/how-does-a-java-application/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://jheloper.github.io/2019/06/how-does-a-java-application/&title=자바 애플리케이션은 어떻게 실행되는걸까?"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://jheloper.github.io/2019/06/how-does-a-java-application/&title=자바 애플리케이션은 어떻게 실행되는걸까?"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://jheloper.github.io/2019/06/how-does-a-java-application/&title=자바 애플리케이션은 어떻게 실행되는걸까?"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://jheloper.github.io/2019/06/how-does-a-java-application/&title=자바 애플리케이션은 어떻게 실행되는걸까?"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://jheloper.github.io/2019/06/how-does-a-java-application/&name=자바 애플리케이션은 어떻게 실행되는걸까?&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://jheloper.github.io/2019/06/how-does-a-java-application/&t=자바 애플리케이션은 어떻게 실행되는걸까?"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020
+    Jheloper
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/tags/">Tag</a></li>
+         
+          <li><a href="/categories/">Category</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-107872316-2', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'jheloper';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+
+</body>
+</html>

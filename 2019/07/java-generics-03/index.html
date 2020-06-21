@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="이전 포스트에 이어서 자바의 제네릭을 실제로 활용하는 내용에 대해서 정리해보자. 와일드카드 타입(Wildcard type)이전 포스트까지 읽었다면 제네릭을 선언하여 코드 내에서 사용하고, 클라이언트 코드에서 구체적 타입을 지정하는 방법들은 알게 되었다. 그런데 또 하나, 만약 제네릭을 메서드의 파라미터로 주고 받는 경우에는 어떻게 해야할까? 또 하나의 예">
+<meta name="keywords" content="Java,GenericProgramming">
+<meta property="og:type" content="article">
+<meta property="og:title" content="자바의 제네릭에 대해서 - 실전편(2)">
+<meta property="og:url" content="https://jheloper.github.io/2019/07/java-generics-03/index.html">
+<meta property="og:site_name" content="Jheloper&#39;s Dev Log">
+<meta property="og:description" content="이전 포스트에 이어서 자바의 제네릭을 실제로 활용하는 내용에 대해서 정리해보자. 와일드카드 타입(Wildcard type)이전 포스트까지 읽었다면 제네릭을 선언하여 코드 내에서 사용하고, 클라이언트 코드에서 구체적 타입을 지정하는 방법들은 알게 되었다. 그런데 또 하나, 만약 제네릭을 메서드의 파라미터로 주고 받는 경우에는 어떻게 해야할까? 또 하나의 예">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://jheloper.github.io/images/java-logo.jpg">
+<meta property="og:updated_time" content="2020-06-21T20:09:35.863Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="자바의 제네릭에 대해서 - 실전편(2)">
+<meta name="twitter:description" content="이전 포스트에 이어서 자바의 제네릭을 실제로 활용하는 내용에 대해서 정리해보자. 와일드카드 타입(Wildcard type)이전 포스트까지 읽었다면 제네릭을 선언하여 코드 내에서 사용하고, 클라이언트 코드에서 구체적 타입을 지정하는 방법들은 알게 되었다. 그런데 또 하나, 만약 제네릭을 메서드의 파라미터로 주고 받는 경우에는 어떻게 해야할까? 또 하나의 예">
+<meta name="twitter:image" content="https://jheloper.github.io/images/java-logo.jpg">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/p_favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/p_favicon.ico" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/p_favicon.ico">
+          
+        
+    
+    <!-- title -->
+    <title>자바의 제네릭에 대해서 - 실전편(2)</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/tags/">Tag</a></li>
+         
+          <li><a href="/categories/">Category</a></li>
+        
+      </ul>
+    </span>
+    <br>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/07/retrospective-2019-q2/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/07/java-generics-02/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://jheloper.github.io/2019/07/java-generics-03/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://jheloper.github.io/2019/07/java-generics-03/&text=자바의 제네릭에 대해서 - 실전편(2)"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://jheloper.github.io/2019/07/java-generics-03/&title=자바의 제네릭에 대해서 - 실전편(2)"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://jheloper.github.io/2019/07/java-generics-03/&is_video=false&description=자바의 제네릭에 대해서 - 실전편(2)"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=자바의 제네릭에 대해서 - 실전편(2)&body=Check out this article: https://jheloper.github.io/2019/07/java-generics-03/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://jheloper.github.io/2019/07/java-generics-03/&title=자바의 제네릭에 대해서 - 실전편(2)"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://jheloper.github.io/2019/07/java-generics-03/&title=자바의 제네릭에 대해서 - 실전편(2)"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://jheloper.github.io/2019/07/java-generics-03/&title=자바의 제네릭에 대해서 - 실전편(2)"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://jheloper.github.io/2019/07/java-generics-03/&title=자바의 제네릭에 대해서 - 실전편(2)"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://jheloper.github.io/2019/07/java-generics-03/&name=자바의 제네릭에 대해서 - 실전편(2)&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://jheloper.github.io/2019/07/java-generics-03/&t=자바의 제네릭에 대해서 - 실전편(2)"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#와일드카드-타입-Wildcard-type"><span class="toc-number">1.</span> <span class="toc-text">와일드카드 타입(Wildcard type)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#한정적-와일드카드-타입-Bounded-wildcard-type"><span class="toc-number">2.</span> <span class="toc-text">한정적 와일드카드 타입(Bounded wildcard type)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#제네릭-타입의-상속과-구현"><span class="toc-number">3.</span> <span class="toc-text">제네릭 타입의 상속과 구현</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        자바의 제네릭에 대해서 - 실전편(2)
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Jheloper's Dev Log</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-07-14T14:50:00.000Z" itemprop="datePublished">2019-07-14</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/GenericProgramming/">GenericProgramming</a>, <a class="tag-link" href="/tags/Java/">Java</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p><img src="/images/java-logo.jpg" alt></p>
+<p><a href="/2019/07/java-generics-02">이전 포스트</a>에 이어서 자바의 제네릭을 실제로 활용하는 내용에 대해서 정리해보자.</p>
+<h2 id="와일드카드-타입-Wildcard-type"><a href="#와일드카드-타입-Wildcard-type" class="headerlink" title="와일드카드 타입(Wildcard type)"></a>와일드카드 타입(Wildcard type)</h2><p>이전 포스트까지 읽었다면 제네릭을 선언하여 코드 내에서 사용하고, 클라이언트 코드에서 구체적 타입을 지정하는 방법들은 알게 되었다. 그런데 또 하나, 만약 제네릭을 메서드의 파라미터로 주고 받는 경우에는 어떻게 해야할까? 또 하나의 예제를 만들어보자.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ListUtil</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function"><span class="keyword">void</span> <span class="title">printElements</span><span class="params">(List&lt;T&gt; list)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; list.size(); i++) &#123;</span><br><span class="line">            System.out.println(list.get(i));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>위 예제는 List 인터페이스 구현체 객체를 파라미터로 받아서 요소를 출력하는 간단한 정적 제네릭 메서드를 가진 ListUtil 클래스다. 자, 이 간단한 메서드의 기능을 테스트해보자.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ListUtilTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">printElements</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">final</span> List&lt;Number&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        list.add(<span class="number">1</span>);</span><br><span class="line">        list.add(<span class="number">2</span>);</span><br><span class="line">        list.add(<span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">        ListUtil.&lt;Number&gt;printElements(list);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>ListUtil 클래스의 제네릭 메서드에 구체적 타입으로 Number를 지정했고, 파라미터로 전달한 객체 역시 <code>List&lt;Number&gt;</code> 타입이기 때문에 위 테스트 코드는 문제없이 통과한다. 그렇다면 조금 바꿔보도록 하자. <code>final List&lt;Number&gt; list = new ArrayList&lt;&gt;();</code> 부분에서 List의 타입 파라미터를 Number가 아닌 Integer로 바꾼다면 어떨까?</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">printElements</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">final</span> List&lt;Integer&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    list.add(<span class="number">1</span>);</span><br><span class="line">    list.add(<span class="number">2</span>);</span><br><span class="line">    list.add(<span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">    ListUtil.&lt;Number&gt;printElements(list);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>위 코드 역시 문제없이 실행되어야 하지 않을까? 그러나 안타깝게도 위 코드는 컴파일 오류가 발생한다. 왜일까?</p>
+<p>이는 자바의 제네릭 특성 상, <strong>파라미터화 타입(parameterized type)</strong>인 <code>List&lt;Number&gt;</code>와 <code>List&lt;Integer&gt;</code> 간의 관계는 <strong>구체적 타입인 Number와 Integer 간의 관계와는 무관</strong>하기 때문이다. 따라서 제네릭 메서드에 구체적 타입으로 Number를 지정했다면 파라미터로 가능한 것은 <code>List&lt;Integer&gt;</code>가 아닌 <code>List&lt;Number&gt;</code>이다.</p>
+<p>그런데 만약, 해당 제네릭 메서드에 파라미터로 지정할 List가 Number도 있고, Integer도 있고, Double도 있다면 어떻게 해야 할까? ListUtil 클래스의 printElements 메서드를 아래와 같이 수정해보자.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">printElements</span><span class="params">(List&lt;?&gt; list)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; list.size(); i++) &#123;</span><br><span class="line">        System.out.println(list.get(i));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>어느 부분이 바뀌었는지 보이는가? 원래 제네릭 메서드였지만, 이제는 평범한 정적 메서드처럼 보인다. 하나 특이한 것이라면, 메서드의 파라미터가 <code>List&lt;?&gt;</code>로 지정되어 있다는 점이다.</p>
+<p>이쯤에서 <strong>와일드카드 타입(Wildcard type)</strong>에 대해서 얘기해보자. 위처럼 제네릭 타입 또는 제네릭 메서드가 메서드의 파라미터로 구체적 타입을 받아들일 때, <strong>모든 클래스와 인터페이스 타입을 허용하는 특별한 타입인 와일드카드 타입을 사용</strong>할 수 있다.</p>
+<p>그렇다면 저렇게 와일드카드 타입으로 바꾼 메서드는 <code>List&lt;Integer&gt;</code>를 파라미터로 받아들일 수 있을까?</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">printElements</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">final</span> List&lt;Integer&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    list.add(<span class="number">1</span>);</span><br><span class="line">    list.add(<span class="number">2</span>);</span><br><span class="line">    list.add(<span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 보통의 정적 메서드가 되었기 때문에 구체적 타입을 지정하던 부분은 삭제</span></span><br><span class="line">    ListUtil.printElements(list);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>테스트 코드를 위처럼 수정하고 실행해보면 정상적으로 동작함을 알 수 있다.</p>
+<h2 id="한정적-와일드카드-타입-Bounded-wildcard-type"><a href="#한정적-와일드카드-타입-Bounded-wildcard-type" class="headerlink" title="한정적 와일드카드 타입(Bounded wildcard type)"></a>한정적 와일드카드 타입(Bounded wildcard type)</h2><p>와일드카드 타입을 사용해서 유연성을 확보한 것은 좋지만, 한 가지 꺼림칙한 점이 있다. 유연해도 너무 유연하다. 예를 들어 위 예제에서 누군가의 실수로 파라미터로 <code>List&lt;Integer&gt;</code> 대신 <code>List&lt;Object&gt;</code>을 넣었다고 가정해보자.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">printElements</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">final</span> List&lt;Object&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    list.add(<span class="number">1</span>);</span><br><span class="line">    list.add(<span class="number">2</span>);</span><br><span class="line">    list.add(<span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">    ListUtil.printElements(list);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>그래도 정상적으로 컴파일 되고 실행 결과도 동일하다. 그러나 의도한 바는 아니다. 작성자의 의도가 만약 *”Number 클래스와 그 하위 클래스들의 List 구현체만을 파라미터로 받고 싶다”* 라면 위 테스트 코드는 실패한 것이다.</p>
+<p>그런데 와일드카드 타입은 위에서 설명했던 것처럼 모든 클래스와 인터페이스 타입을 허용한다. 그렇다면 와일드카드 타입의 허용 범위를 제한할 방법은 없을까? 다행히도, 방법이 있다. <strong>한정적 와일드카드 타입(Bounded wildcard type)</strong>을 사용하면 된다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">printNumberExtendElements</span><span class="params">(List&lt;? extends Number&gt; list)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; list.size(); i++) &#123;</span><br><span class="line">        System.out.println(list.get(i));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>위 코드는 ListUtil 클래스에 추가한 printNumberExtendElements 메서드인데, 어떤 차이점이 있는지 알아챘는가? 와일드카드 <code>?</code> 뒤에 <code>extends</code> 키워드가 붙어있고 그 뒤에는 Number 클래스가 지정되어 있다. 이것이 바로 한정적 와일드카드 타입을 적용했을 때의 코드이며, printNumberExtendElements 메서드에 파라미터로 넘어오는 List의 타입 파라미터 구체적 타입을 Number 또는 Number의 하위 클래스로 제한한 것이다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">printNumberExtendElements</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">final</span> List&lt;Object&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    list.add(<span class="number">1L</span>);</span><br><span class="line">    list.add(<span class="number">2L</span>);</span><br><span class="line">    list.add(<span class="number">3L</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 컴파일 오류 발생</span></span><br><span class="line">    ListUtil.printNumberExtendElements(list);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>한정적 와일드카드 타입을 적용한 printNumberExtendElements 메서드에 <code>List&lt;Object&gt;</code>를 사용한 테스트 코드를 실행하려고 하면 컴파일 오류가 발생한다. 이렇게 와일드카드 타입에 허용되는 구체적 타입을 제한할 수 있다.</p>
+<p>한정적 와일드카드 타입에는 2가지의 키워드를 사용할 수 있는데, <code>extends</code>와 <code>super</code>다. 이 키워드들의 차이점은 <code>extends</code> 키워드를 사용하면 <strong>상향 한정적 와일드카드 타입(Upper bounded wildcard type)</strong>, <code>super</code> 키워드를 사용하면 <strong>하향 한정적 와일드카드 타입(Lower bounded wildcard type)</strong>이라는 것이다.</p>
+<p>지금 printNumberExtendElements 메서드는 List 인터페이스의 구현체를 파라미터로 받을 때 타입 파라미터를 와일드카드 타입으로 받되 Number 또는 Number의 하위 클래스만을 허용하도록 되어있다. 그런데 만약, Integer 또는 Integer의 상위 클래스만을 허용하는 새로운 메서드를 추가하고 싶다면?</p>
+<p>아래 메서드를 ListUtil에 추가해보자.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">printIntegerSuperElements</span><span class="params">(List&lt;? <span class="keyword">super</span> Integer&gt; list)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; list.size(); i++) &#123;</span><br><span class="line">        System.out.println(list.get(i));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>차이점은 한정적 와일드카드 타입을 사용한 부분을 <code>extends</code>가 아닌 <code>super</code>로, 와일드카드 타입에 허용되는 구체적 타입이 Integer이라는 것뿐이다.</p>
+<p>테스트 코드를 작성해서 확인해보자.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">printIntegerSuperElements</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">final</span> List&lt;Long&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    list.add(<span class="number">1L</span>);</span><br><span class="line">    list.add(<span class="number">2L</span>);</span><br><span class="line">    list.add(<span class="number">3L</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 컴파일 오류 발생</span></span><br><span class="line">    ListUtil.printIntegerSuperElements(list);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>위 테스트 코드는 역시 컴파일 오류가 발생한다. 왜냐하면 한정적 와일드카드로 Integer 또는 Integer의 상위 클래스만을 받도록 제한했기 때문이다. Long 타입은 printIntegerSuperElements 메서드에 지정된 한정적 와일드카드 타입의 허용 범위에 포함되지 않는다.</p>
+<h2 id="제네릭-타입의-상속과-구현"><a href="#제네릭-타입의-상속과-구현" class="headerlink" title="제네릭 타입의 상속과 구현"></a>제네릭 타입의 상속과 구현</h2><p><strong>제네릭 타입 역시 상속 및 구현이 가능</strong>하다. 먼저 제네릭 클래스의 상속부터 살펴보자.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ParentStorage</span>&lt;<span class="title">T</span>, <span class="title">U</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> T primaryData;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> U secondaryData;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> T <span class="title">getPrimaryData</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> primaryData;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setPrimaryData</span><span class="params">(T primaryData)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.primaryData = primaryData;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> U <span class="title">getSecondaryData</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> secondaryData;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setSecondaryData</span><span class="params">(U secondaryData)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.secondaryData = secondaryData;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>위의 ParentStorage 클래스는 간단한 클래스로 2종류의 데이터를 저장하는 기능이 있는데, 저장하는 데이터의 타입을 지정하기 위해 2개의 타입 파라미터를 받고 있다. 그런데 ParentStorage의 기능을 그대로 사용하면서 3번째 데이터를 저장하는 ChildStorage 클래스를 구현하고 싶다면 상속을 이용하는 것이 좋지 않을까?</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ChildStorage</span>&lt;<span class="title">T</span>, <span class="title">U</span>, <span class="title">V</span>&gt; <span class="keyword">extends</span> <span class="title">ParentStorage</span>&lt;<span class="title">T</span>, <span class="title">U</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> V tertiaryData;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> V <span class="title">getTertiaryData</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> tertiaryData;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setTertiaryData</span><span class="params">(V tertiaryData)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.tertiaryData = tertiaryData;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>위의 ChildStorage 클래스는 ParentStorage 클래스를 상속하면서 총 3개의 타입 파라미터가 선언되어 있다. 그 중 2개의 타입 파라미터는 ParentStorage 클래스의 타입 파라미터로 넘기고 있으며, 나머지 1개의 타입 파라미터는 3번째 데이터의 타입으로 지정했다.</p>
+<p>자, 정상적으로 동작하는지 테스트 코드를 작성해보자.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ChildStorageTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">createChildStorage</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">final</span> String primaryData = <span class="string">"this is primary data."</span>;</span><br><span class="line">        <span class="keyword">final</span> Integer secondaryData = <span class="number">10</span>;</span><br><span class="line">        <span class="keyword">final</span> Double tertiaryData = <span class="number">5.5</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">final</span> ChildStorage&lt;String, Integer, Double&gt; childStorage = <span class="keyword">new</span> ChildStorage&lt;&gt;();</span><br><span class="line"></span><br><span class="line">        childStorage.setPrimaryData(primaryData);</span><br><span class="line">        childStorage.setSecondaryData(secondaryData);</span><br><span class="line">        childStorage.setTertiaryData(tertiaryData);</span><br><span class="line"></span><br><span class="line">        Assert.assertNotNull(childStorage);</span><br><span class="line">        Assert.assertEquals(primaryData, childStorage.getPrimaryData());</span><br><span class="line">        Assert.assertEquals(secondaryData, childStorage.getSecondaryData());</span><br><span class="line">        Assert.assertEquals(tertiaryData, childStorage.getTertiaryData());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>테스트 코드를 실행해보면 기대한 결과대로 동작한다. 그럼 이제 제네릭 인터페이스의 구현을 보자.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">StorageType</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">set</span><span class="params">(T data)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">T <span class="title">get</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>StorageType 인터페이스는 우리가 몇 번이나 예제로 써먹었던 Storage 클래스들의 기본적인 기능을 공통화한 제네릭 인터페이스다. 이것을 구현하는 클래스를 한 번 만들어보자.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StorageImpl</span>&lt;<span class="title">T</span>&gt; <span class="keyword">implements</span> <span class="title">StorageType</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> T data;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">set</span><span class="params">(T data)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.data = data;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> T <span class="title">get</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> data;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>실제로 사용하는 예제를 위해 테스트 코드를 작성해보자. 아래와 같다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StorageImplTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAndGet</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">final</span> String data = <span class="string">"this is data."</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">final</span> StorageType&lt;String&gt; storage = <span class="keyword">new</span> StorageImpl&lt;&gt;();</span><br><span class="line"></span><br><span class="line">        storage.set(data);</span><br><span class="line"></span><br><span class="line">        Assert.assertNotNull(storage);</span><br><span class="line">        Assert.assertEquals(data, storage.get());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>자, 이렇게 제네릭 인터페이스를 선언하고 그것을 구현하는 클래스의 예제를 만들어보았다. 위 테스트 코드를 실행하면? 기대한 바대로 테스트는 성공한다.</p>
+<p>이것으로 자바의 제네릭에 대해서 실전편을 마무리하자.</p>
+<blockquote>
+<p>포스트에서 사용한 예제 코드는 <a href="https://github.com/jheloper/java-playground" target="_blank" rel="noopener">여기</a>에서도 확인할 수 있습니다.</p>
+</blockquote>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/tags/">Tag</a></li>
+         
+          <li><a href="/categories/">Category</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#와일드카드-타입-Wildcard-type"><span class="toc-number">1.</span> <span class="toc-text">와일드카드 타입(Wildcard type)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#한정적-와일드카드-타입-Bounded-wildcard-type"><span class="toc-number">2.</span> <span class="toc-text">한정적 와일드카드 타입(Bounded wildcard type)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#제네릭-타입의-상속과-구현"><span class="toc-number">3.</span> <span class="toc-text">제네릭 타입의 상속과 구현</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://jheloper.github.io/2019/07/java-generics-03/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://jheloper.github.io/2019/07/java-generics-03/&text=자바의 제네릭에 대해서 - 실전편(2)"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://jheloper.github.io/2019/07/java-generics-03/&title=자바의 제네릭에 대해서 - 실전편(2)"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://jheloper.github.io/2019/07/java-generics-03/&is_video=false&description=자바의 제네릭에 대해서 - 실전편(2)"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=자바의 제네릭에 대해서 - 실전편(2)&body=Check out this article: https://jheloper.github.io/2019/07/java-generics-03/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://jheloper.github.io/2019/07/java-generics-03/&title=자바의 제네릭에 대해서 - 실전편(2)"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://jheloper.github.io/2019/07/java-generics-03/&title=자바의 제네릭에 대해서 - 실전편(2)"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://jheloper.github.io/2019/07/java-generics-03/&title=자바의 제네릭에 대해서 - 실전편(2)"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://jheloper.github.io/2019/07/java-generics-03/&title=자바의 제네릭에 대해서 - 실전편(2)"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://jheloper.github.io/2019/07/java-generics-03/&name=자바의 제네릭에 대해서 - 실전편(2)&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://news.ycombinator.com/submitlink?u=https://jheloper.github.io/2019/07/java-generics-03/&t=자바의 제네릭에 대해서 - 실전편(2)"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2020
+    Jheloper
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/tags/">Tag</a></li>
+         
+          <li><a href="/categories/">Category</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<!-- clipboard -->
+
+  <script src="/lib/clipboard/clipboard.min.js"></script>
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-107872316-2', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'jheloper';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+
+</body>
+</html>
